@@ -1,5 +1,5 @@
-# Zebrafish facility control system
+# Zebrafish Facility Management System
 
-## Control system designed to help regulate aquarium parameters to raise Zebrafish
+## A control system designed to monitor and regulate environmental conditions in a zebrafish facility
 
 project in progress
