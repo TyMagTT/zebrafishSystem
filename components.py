@@ -1,3 +1,5 @@
+from random import uniform
+
 
 class Meter:
     def __init__(self, current_object, meter_type, current_value, unit):
@@ -41,6 +43,15 @@ class Tank:
             if parameter['id'] == parameter_id:
                 return parameter['value']
         raise KeyError
+
+    def simulate(self):
+        for parameter in self._parameters:
+            simulation = parameter["simulation"]
+            average_change = simulation["average_change"]
+            min_change = average_change * 0.75
+            max_change = average_change * 1.25
+            random_change = uniform(min_change, max_change)
+            parameter["value"] -= random_change
 
 
 class Controller:
