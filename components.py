@@ -84,6 +84,7 @@ class Controller:
         self._meters = meters
         self._regulators = regulators
         self._other = other
+        self._settings = settings
 
     def check_parameter(self, parameter_id):
         if not isinstance(parameter_id, str):
