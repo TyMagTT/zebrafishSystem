@@ -1,10 +1,23 @@
 [
     {
         "id": "ph",
-        "value": 7
+        "value": 7.5,
+        "simulation": {
+            "average_change": 0.05
+        }
     },
     {
         "id": "temperature",
-        "value": 20
+        "value": 27,
+        "simulation": {
+            "average_change": 0.1
+        }
+    },
+    {
+        "id": "conductivity",
+        "value": 700,
+        "simulation": {
+            "average_change": 5
+        }
     }
 ]

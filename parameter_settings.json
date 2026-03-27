@@ -1,0 +1,23 @@
+[
+    {
+        "id": "ph",
+        "alarm_low": 6.5,
+        "low_value": 7.0,
+        "high_value": 8.0,
+        "alarm_high": 8.5
+    },
+    {
+        "id": "temperature",
+        "alarm_low": 23,
+        "low_value": 25,
+        "high_value": 29,
+        "alarm_high": 30
+    },
+    {
+        "id": "conductivity",
+        "alarm_low": 500,
+        "low_value": 650,
+        "high_value": 750,
+        "alarm_high": 1000
+    }
+]
