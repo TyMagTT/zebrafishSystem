@@ -1,4 +1,4 @@
-from components import Meter, Tank
+from components import Meter, Tank, Regulator
 import pytest
 
 my_parameters = [
@@ -70,3 +70,13 @@ def test_tank_change_by():
     assert around(my_tank.check("ph"), 7.5)
     my_tank.change_by("ph", 1.0)
     assert around(my_tank.check("ph"), 8.5)
+
+
+def test_regulator_work():
+    my_tank = Tank(my_parameters)
+    my_pump = Regulator(my_tank, "ph", 0.25)
+    assert around(my_tank.check("ph"), 7.5)
+    my_pump.work()
+    assert around(my_tank.check("ph"), 7.75)
+    my_pump.work()
+    assert around(my_tank.check("ph"), 8.0)
