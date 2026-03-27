@@ -22,8 +22,14 @@ class Meter:
 
 
 class Regulator:
-    def __init__(self):
-        pass
+    def __init__(self, current_object, regulator_type, speed):
+        self._object = current_object
+        self._type = regulator_type
+        self._speed = speed
+
+    def work(self):
+        speed = float(self._speed)
+        self._object.change_by(self._type, speed)
 
 
 class Tank:
@@ -31,10 +37,20 @@ class Tank:
         if not isinstance(parameters, list):
             raise ValueError
         for parameter in parameters:
-            value = parameter["value"]
+            value = parameter['value']
             if not isinstance(value, float):
-                parameter["value"] = float(value)
+                parameter['value'] = float(value)
         self._parameters = parameters
+
+    def change_by(self, parameter_id, value):
+        if not isinstance(parameter_id, str):
+            raise ValueError
+        if not isinstance(value, float):
+            raise ValueError
+        for parameter in self._parameters:
+            if parameter['id'] == parameter_id:
+                parameter['value'] += value
+                return
 
     def check(self, parameter_id):
         if not isinstance(parameter_id, str):
@@ -46,12 +62,12 @@ class Tank:
 
     def simulate(self):
         for parameter in self._parameters:
-            simulation = parameter["simulation"]
-            average_change = simulation["average_change"]
+            simulation = parameter['simulation']
+            average_change = simulation['average_change']
             min_change = average_change * 0.75
             max_change = average_change * 1.25
             random_change = uniform(min_change, max_change)
-            parameter["value"] -= random_change
+            parameter['value'] -= random_change
 
 
 class Controller:
