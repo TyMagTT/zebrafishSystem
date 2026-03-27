@@ -71,5 +71,22 @@ class Tank:
 
 
 class Controller:
-    def __init__(self):
+    def __init__(self, meters, regulators, other, settings):
+        if not isinstance(meters, list):
+            raise ValueError
+        if not isinstance(regulators, list):
+            raise ValueError
+        if not isinstance(other, list):
+            raise ValueError
+        self._meters = meters
+        self._regulators = regulators
+        self._other = other
+
+    def check_parameter(self):
+        pass
+
+    def raise_parameter(self):
+        pass
+
+    def control(self):
         pass

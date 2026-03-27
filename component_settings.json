@@ -1,0 +1,17 @@
+[
+    {
+        "meters": [
+            "ph",
+            "temperature",
+            "conductivity"
+        ],
+        "regulators": [
+            "ph",
+            "temperature",
+            "conductivity"
+        ],
+        "other": [
+            "lights"
+        ]
+    }
+]
