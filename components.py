@@ -20,6 +20,9 @@ class Meter:
     def unit(self):
         return self._unit
 
+    def type(self):
+        return self._type
+
 
 class Regulator:
     def __init__(self, current_object, regulator_type, speed):
@@ -82,11 +85,30 @@ class Controller:
         self._regulators = regulators
         self._other = other
 
-    def check_parameter(self):
-        pass
+    def check_parameter(self, parameter_id):
+        if not isinstance(parameter_id, str):
+            raise ValueError
+        for meter in self._meters:
+            if meter.type() == parameter_id:
+                reading = meter.value()
+        for setting in self._settings:
+            if setting['id'] == parameter_id:
+                if reading < setting['alarm_low']:
+                    return 'alarm_low'
+                if reading > setting['alarm_high']:
+                    return 'alarm_high'
+                if reading < setting['low_value']:
+                    return 'low'
+                if reading > setting['high_value']:
+                    return 'high'
+                return 'normal'
 
     def raise_parameter(self):
         pass
+
+    def send_alarm(self, parameter, code, message, value):
+        msg = f'{message} Current {parameter} is {value}! (Code: {code})'
+        print(msg)
 
     def control(self):
         pass
