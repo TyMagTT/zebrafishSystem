@@ -63,9 +63,24 @@ pumps = [ph_pump, heater, water_pump]
 controller = Controller([my_tank], meters, pumps, [], my_settings)
 
 for i in range(180):
-    ph_string = f'Current ph is {round(my_tank.check("ph"), 2)}'
-    temp_string = f'Current temp is {round(my_tank.check("temperature"), 2)}'
-    conduct_string = f'Current conduct is {round(my_tank.check("conductivity"), 2)}\n'
+    if ph_meter.is_raising:
+        ph_arrow = "↑"
+    else:
+        ph_arrow = "↓"
+
+    if temp_meter.is_raising:
+        temp_arrow = "↑"
+    else:
+        temp_arrow = "↓"
+
+    if conduct_meter.is_raising:
+        con_arrow = "↑"
+    else:
+        con_arrow = "↓"
+
+    ph_string = f'Current ph is {round(my_tank.check("ph"), 2)} {ph_arrow}'
+    temp_string = f'Current temp is {round(my_tank.check("temperature"), 2)} {temp_arrow}'
+    conduct_string = f'Current conduct is {round(my_tank.check("conductivity"), 2)} {con_arrow}\n'
     print(ph_string)
     print(temp_string)
     print(conduct_string)
