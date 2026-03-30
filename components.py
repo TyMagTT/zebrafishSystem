@@ -23,6 +23,9 @@ class Meter:
     def type(self):
         return self._type
 
+    def current_object(self):
+        return self._object
+
 
 class Regulator:
     def __init__(self, current_object, regulator_type, speed):
@@ -33,6 +36,15 @@ class Regulator:
     def work(self):
         speed = float(self._speed)
         self._object.change_by(self._type, speed)
+
+    def speed(self):
+        return self._speed
+
+    def type(self):
+        return self._type
+
+    def current_object(self):
+        return self._object
 
 
 class Tank:
@@ -74,23 +86,28 @@ class Tank:
 
 
 class Controller:
-    def __init__(self, meters, regulators, other, settings):
+    def __init__(self, tanks, meters, regulators, other, settings):
+        if not isinstance(tanks, list):
+            raise ValueError
         if not isinstance(meters, list):
             raise ValueError
         if not isinstance(regulators, list):
             raise ValueError
         if not isinstance(other, list):
             raise ValueError
+        self._tanks = tanks
         self._meters = meters
         self._regulators = regulators
         self._other = other
         self._settings = settings
 
-    def check_parameter(self, parameter_id):
+    def check_parameter(self, parameter_id, tank):
         if not isinstance(parameter_id, str):
             raise ValueError
+        if not isinstance(tank, Tank):
+            raise ValueError
         for meter in self._meters:
-            if meter.type() == parameter_id:
+            if meter.type() == parameter_id and meter.current_object() == tank:
                 reading = meter.value()
         for setting in self._settings:
             if setting['id'] == parameter_id:
@@ -104,12 +121,18 @@ class Controller:
                     return 'high'
                 return 'normal'
 
-    def raise_parameter(self):
-        pass
+    def raise_parameter(self, parameter_id, tank):
+        if not isinstance(parameter_id, str):
+            raise ValueError
+        if not isinstance(tank, Tank):
+            raise ValueError
+        for regulator in self._regulators:
+            if regulator.type() == parameter_id and regulator.current_object() == tank:
+                regulator.work()
 
     def send_alarm(self, parameter, code, message, value):
         msg = f'{message} Current {parameter} is {value}! (Code: {code})'
         print(msg)
 
-    def control(self):
+    def step(self):
         pass

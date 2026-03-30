@@ -119,18 +119,29 @@ def test_controller_check_parameter():
     my_tank = Tank(test_parameters)
     my_meter = Meter(my_tank, "ph", 6.25, "pH")
     my_pump = Regulator(my_tank, "ph", 0.5)
-    my_controller = Controller([my_meter], [my_pump], [], my_settings)
-    assert my_controller.check_parameter("ph") == "alarm_low"  # 6.25
+    my_controller = Controller([my_tank], [my_meter], [my_pump], [], my_settings)
+    assert my_controller.check_parameter("ph", my_tank) == "alarm_low"  # 6.25
     my_pump.work()
     my_meter.update_value()
-    assert my_controller.check_parameter("ph") == "low"  # 6.75
+    assert my_controller.check_parameter("ph", my_tank) == "low"  # 6.75
     my_pump.work()
     my_meter.update_value()
-    assert my_controller.check_parameter("ph") == "normal"  # 7.25
+    assert my_controller.check_parameter("ph", my_tank) == "normal"  # 7.25
     my_pump.work()
     my_pump.work()
     my_meter.update_value()
-    assert my_controller.check_parameter("ph") == "high"  # 8.25
+    assert my_controller.check_parameter("ph", my_tank) == "high"  # 8.25
     my_pump.work()
     my_meter.update_value()
-    assert my_controller.check_parameter("ph") == "alarm_high"  # 8.75
+    assert my_controller.check_parameter("ph", my_tank) == "alarm_high"  # 8.75
+
+
+def test_controller_raise_parameter():
+    my_tank = Tank(my_parameters)
+    my_meter = Meter(my_tank, "ph", 0, "pH")
+    my_pump = Regulator(my_tank, "ph", 0.5)
+    my_controller = Controller([my_tank], [my_meter], [my_pump], [], my_settings)
+    my_meter.update_value()
+    assert around(my_tank.check("ph"), 7.5)
+    my_controller.raise_parameter("ph", my_tank)
+    assert around(my_tank.check("ph"), 8.0)
