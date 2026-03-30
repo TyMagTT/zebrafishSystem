@@ -9,6 +9,7 @@ class Meter:
         self._type = meter_type
         self._current_value = current_value
         self._unit = unit
+        self.is_raising = False
 
     def update_value(self):
         new_value = self._object.check(self._type)
@@ -144,3 +145,23 @@ class Controller:
         for meter in self._meters:
             id = meter.type()
             tank = meter.current_object()
+            result = self.check_parameter(id, tank)
+            if meter.is_raising:
+                if result == "alarm_high":
+                    self.send_alarm(id, result, messages[result], meter.value())
+                    meter.is_raising = False
+                elif result == "high":
+                    meter.is_raising = False
+                elif result == "alarm_low":
+                    self.send_alarm(id, result, messages[result], meter.value())
+                    self.raise_parameter(id, tank)
+                else:
+                    self.raise_parameter(id, tank)
+            else:
+                if result == "alarm_high":
+                    self.send_alarm(id, result, messages[result], meter.value())
+                elif result == "low":
+                    meter.is_raising = True
+                elif result == "alarm_low":
+                    self.send_alarm(id, result, messages[result], meter.value())
+                    meter.is_raising = True
