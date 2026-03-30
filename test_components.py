@@ -1,4 +1,4 @@
-from components import Meter, Tank, Regulator
+from components import Meter, Tank, Regulator, Controller
 import pytest
 
 my_parameters = [
@@ -22,6 +22,30 @@ my_parameters = [
         "simulation": {
             "average_change": 5
         }
+    }
+]
+
+my_settings = [
+    {
+        "id": "ph",
+        "alarm_low": 6.5,
+        "low_value": 7.0,
+        "high_value": 8.0,
+        "alarm_high": 8.5
+    },
+    {
+        "id": "temperature",
+        "alarm_low": 23,
+        "low_value": 25,
+        "high_value": 29,
+        "alarm_high": 30
+    },
+    {
+        "id": "conductivity",
+        "alarm_low": 500,
+        "low_value": 650,
+        "high_value": 750,
+        "alarm_high": 1000
     }
 ]
 
@@ -80,3 +104,33 @@ def test_regulator_work():
     assert around(my_tank.check("ph"), 7.75)
     my_pump.work()
     assert around(my_tank.check("ph"), 8.0)
+
+
+def test_controller_check_parameter():
+    test_parameters = [
+        {
+            "id": "ph",
+            "value": 6.25,
+            "simulation": {
+                "average_change": 0.05
+            }
+        }
+    ]
+    my_tank = Tank(test_parameters)
+    my_meter = Meter(my_tank, "ph", 6.25, "pH")
+    my_pump = Regulator(my_tank, "ph", 0.5)
+    my_controller = Controller([my_meter], [my_pump], [], my_settings)
+    assert my_controller.check_parameter("ph") == "alarm_low"  # 6.25
+    my_pump.work()
+    my_meter.update_value()
+    assert my_controller.check_parameter("ph") == "low"  # 6.75
+    my_pump.work()
+    my_meter.update_value()
+    assert my_controller.check_parameter("ph") == "normal"  # 7.25
+    my_pump.work()
+    my_pump.work()
+    my_meter.update_value()
+    assert my_controller.check_parameter("ph") == "high"  # 8.25
+    my_pump.work()
+    my_meter.update_value()
+    assert my_controller.check_parameter("ph") == "alarm_high"  # 8.75

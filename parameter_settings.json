@@ -10,7 +10,7 @@
         "id": "temperature",
         "alarm_low": 23,
         "low_value": 25,
-        "high_value": 29,
+        "high_value": 28,
         "alarm_high": 30
     },
     {
