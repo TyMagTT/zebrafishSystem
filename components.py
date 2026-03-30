@@ -108,6 +108,7 @@ class Controller:
             raise ValueError
         for meter in self._meters:
             if meter.type() == parameter_id and meter.current_object() == tank:
+                meter.update_value()
                 reading = meter.value()
         for setting in self._settings:
             if setting['id'] == parameter_id:
@@ -135,4 +136,11 @@ class Controller:
         print(msg)
 
     def step(self):
-        pass
+        messages = {
+            "alarm_low": "Parameter too low!",
+            "alarm_high": "Parameter too high!"
+        }
+
+        for meter in self._meters:
+            id = meter.type()
+            tank = meter.current_object()
