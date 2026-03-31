@@ -141,7 +141,7 @@ class Controller:
         print(msg)
 
     def step(self):
-        messages = {
+        msg = {
             "alarm_low": "Parameter too low!",
             "alarm_high": "Parameter too high!"
         }
@@ -152,20 +152,20 @@ class Controller:
             result = self.check_parameter(id, tank)
             if meter.is_raising:
                 if result == "alarm_high":
-                    self.send_alarm(id, result, messages[result], meter.value())
+                    self.send_alarm(id, result, msg[result], meter.value())
                     meter.is_raising = False
                 elif result == "high":
                     meter.is_raising = False
                 elif result == "alarm_low":
-                    self.send_alarm(id, result, messages[result], meter.value())
+                    self.send_alarm(id, result, msg[result], meter.value())
                     self.raise_parameter(id, tank)
                 else:
                     self.raise_parameter(id, tank)
             else:
                 if result == "alarm_high":
-                    self.send_alarm(id, result, messages[result], meter.value())
+                    self.send_alarm(id, result, msg[result], meter.value())
                 elif result == "low":
                     meter.is_raising = True
                 elif result == "alarm_low":
-                    self.send_alarm(id, result, messages[result], meter.value())
+                    self.send_alarm(id, result, msg[result], meter.value())
                     meter.is_raising = True
