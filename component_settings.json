@@ -13,5 +13,20 @@
         "other": [
             "lights"
         ]
+    },
+    {
+        "meters": {
+            "ph": "pH",
+            "temperature": "°C",
+            "conductivity": "μS"
+        },
+        "regulators": {
+            "ph": 0.1,
+            "temperature": 0.2,
+            "conductivity": 10
+        },
+        "other": [
+            "lights"
+        ]
     }
 ]

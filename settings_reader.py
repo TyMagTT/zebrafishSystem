@@ -1,5 +1,6 @@
 import json
 from os.path import splitext
+from copy import deepcopy
 from components import Meter, Regulator, Tank
 
 
@@ -19,7 +20,7 @@ def create_components(path, tank_settings):
     regulator_list = []
     other_list = []
     for tank in component_list:
-        tank_object = Tank(tank_settings)
+        tank_object = Tank(deepcopy(tank_settings))
         for id in tank['meters']:
             unit = tank['meters'][id]
             new_meter = Meter(tank_object, id, 0, unit)
