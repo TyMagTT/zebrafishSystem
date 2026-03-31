@@ -108,7 +108,9 @@ class Controller:
         if not isinstance(tank, Tank):
             raise ValueError
         for meter in self._meters:
-            if meter.type() == parameter_id and meter.current_object() == tank:
+            correct_type = meter.type() == parameter_id
+            correct_object = meter.current_object() == tank
+            if correct_type and correct_object:
                 meter.update_value()
                 reading = meter.value()
         for setting in self._settings:
@@ -129,7 +131,9 @@ class Controller:
         if not isinstance(tank, Tank):
             raise ValueError
         for regulator in self._regulators:
-            if regulator.type() == parameter_id and regulator.current_object() == tank:
+            correct_type = regulator.type() == parameter_id
+            correct_object = regulator.current_object() == tank
+            if correct_type and correct_object:
                 regulator.work()
 
     def send_alarm(self, parameter, code, message, value):
