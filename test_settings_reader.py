@@ -1,4 +1,4 @@
-from settings_reader import open_file
+from settings_reader import open_file, create_components
 
 starting_parameters = [
     {
