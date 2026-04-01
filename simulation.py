@@ -15,14 +15,6 @@ def format_tank_name(tank_object):
     return f'Tank{str(id(tank_object))[-3:]}'
 
 
-
-
-
-
-
-
-
-
 def check_meters(meters):
     values = []
     for meter in meters:
@@ -60,16 +52,16 @@ def save_values(dictionary):
             dictionary[meter_name] = [value]
 
 
-def plot_values(sub_x, sub_y, x, y, title, x_label, y_label):
-    ax[sub_x, sub_y].plot(x, y)
-    ax[sub_x, sub_y].set_ylim(bottom=0)
-    ax[sub_x, sub_y].set_title(title)
-    ax[sub_x, sub_y].set_xlabel(x_label)
-    ax[sub_x, sub_y].set_ylabel(y_label)
+def plot_values(sub_x, x, y, title, x_label, y_label):
+    ax[sub_x].plot(x, y)
+    # ax[sub_x].set_ylim(bottom=0)
+    ax[sub_x].set_title(title)
+    ax[sub_x].set_xlabel(x_label)
+    ax[sub_x].set_ylabel(y_label)
 
 
-minute_duration = 0.1
-wait_time = 0.1
+minute_duration = 0.01
+wait_time = 0.001
 frame_number = floor(minute_duration * 60 / wait_time)
 plot_seconds = list(range(0, frame_number))
 saved_values = {}
@@ -82,13 +74,13 @@ for i in range(frame_number):
     save_values(saved_values)
     sleep(wait_time)
 
-fig, ax = plt.subplots(2, 2)
+fig, ax = plt.subplots(3, 1)
 
 for meter in saved_values:
     if meter[-2:] == 'ph':
-        plot_values(0, 0, plot_seconds, saved_values[meter], 'pH', 'Steps', 'Unit')
+        plot_values(0, plot_seconds, saved_values[meter], 'pH', 'Steps', 'Unit')
     elif meter[-2:] == 're':
-        plot_values(0, 1, plot_seconds, saved_values[meter], 'Temperature', 'Steps', 'Unit')
+        plot_values(1, plot_seconds, saved_values[meter], 'Temperature', 'Steps', 'Unit')
     elif meter[-2:] == 'ty':
-        plot_values(1, 0, plot_seconds, saved_values[meter], 'Water Conductivity', 'Steps', 'Unit')
+        plot_values(2, plot_seconds, saved_values[meter], 'Water Conductivity', 'Steps', 'Unit')
 plt.show()
