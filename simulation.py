@@ -1,12 +1,26 @@
-from components import Tank, Meter, Regulator, Controller
+from components import Controller
 from settings_reader import open_file, create_components
 from time import sleep
 from math import floor
+from matplotlib import pyplot as plt
+
 
 my_parameters = open_file('starting_parameters.json')
 my_settings = open_file('parameter_settings.json')
 tanks, meters, regulators, other = create_components('component_settings.json', my_parameters)
 controller = Controller(tanks, meters, regulators, other, my_settings)
+
+
+def format_tank_name(tank_object):
+    return f'Tank{str(id(tank_object))[-3:]}'
+
+
+
+
+
+
+
+
 
 
 def check_meters(meters):
@@ -28,19 +42,48 @@ def print_current_values(meters):
         tank, type, value, unit, working = reading
         value = round(value, 2)
         arrow = "↑" if working else "↓"
-        tank_name = f'Tank{id(tank)}'
+        tank_name = format_tank_name(tank)
         formatted = f'{type} of {tank_name} is {value} {unit} ({arrow})'
         print(formatted)
 
 
-minute_duration = 3
+def save_values(dictionary):
+    readings = check_meters(meters)
+    for reading in readings:
+        tank, type, value, unit, working = reading
+        tank_name = format_tank_name(tank)
+        value = round(value, 2)
+        meter_name = f'{tank_name}_{type}'
+        if meter_name in dictionary.keys():
+            dictionary[meter_name].append(value)
+        else:
+            dictionary[meter_name] = [value]
+
+
+minute_duration = 0.1
 wait_time = 0.1
 frame_number = floor(minute_duration * 60 / wait_time)
+plot_seconds = list(range(0, frame_number))
+saved_values = {}
 
 for i in range(frame_number):
     for tank in tanks:
         tank.simulate()
     controller.step()
     print_current_values(meters)
-
+    save_values(saved_values)
     sleep(wait_time)
+
+fig, ax = plt.subplots(2, 2)
+
+for meter in saved_values:
+    if meter[-2:] == 'ph':
+        ax[0,0].plot(plot_seconds, saved_values[meter])
+        ax[0,0].set_title("pH")
+    elif meter[-2:] == 're':
+        ax[0,1].plot(plot_seconds, saved_values[meter])
+        ax[0,1].set_title("Temperature")
+    elif meter[-2:] == 'ty':
+        ax[1,0].plot(plot_seconds, saved_values[meter])
+        ax[1,0].set_title("Water Conductivity")
+plt.show()
