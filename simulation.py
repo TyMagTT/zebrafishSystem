@@ -60,6 +60,14 @@ def save_values(dictionary):
             dictionary[meter_name] = [value]
 
 
+def plot_values(sub_x, sub_y, x, y, title, x_label, y_label):
+    ax[sub_x, sub_y].plot(x, y)
+    ax[sub_x, sub_y].set_ylim(bottom=0)
+    ax[sub_x, sub_y].set_title(title)
+    ax[sub_x, sub_y].set_xlabel(x_label)
+    ax[sub_x, sub_y].set_ylabel(y_label)
+
+
 minute_duration = 0.1
 wait_time = 0.1
 frame_number = floor(minute_duration * 60 / wait_time)
@@ -78,12 +86,9 @@ fig, ax = plt.subplots(2, 2)
 
 for meter in saved_values:
     if meter[-2:] == 'ph':
-        ax[0,0].plot(plot_seconds, saved_values[meter])
-        ax[0,0].set_title("pH")
+        plot_values(0, 0, plot_seconds, saved_values[meter], 'pH', 'Steps', 'Unit')
     elif meter[-2:] == 're':
-        ax[0,1].plot(plot_seconds, saved_values[meter])
-        ax[0,1].set_title("Temperature")
+        plot_values(0, 1, plot_seconds, saved_values[meter], 'Temperature', 'Steps', 'Unit')
     elif meter[-2:] == 'ty':
-        ax[1,0].plot(plot_seconds, saved_values[meter])
-        ax[1,0].set_title("Water Conductivity")
+        plot_values(1, 0, plot_seconds, saved_values[meter], 'Water Conductivity', 'Steps', 'Unit')
 plt.show()
