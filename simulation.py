@@ -60,7 +60,7 @@ def plot_values(sub_x, x, y, title, x_label, y_label):
     ax[sub_x].set_ylabel(y_label)
 
 
-minute_duration = 0.01
+minute_duration = 0.03
 wait_time = 0.001
 frame_number = floor(minute_duration * 60 / wait_time)
 plot_seconds = list(range(0, frame_number))
