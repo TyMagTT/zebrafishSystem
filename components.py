@@ -83,7 +83,15 @@ class Tank:
             min_change = average_change * 0.75
             max_change = average_change * 1.25
             random_change = uniform(min_change, max_change)
-            parameter['value'] -= random_change
+            new_value = parameter['value'] - random_change
+            min_value = float(simulation['min_value'])
+            max_value = float(simulation['max_value'])
+            if new_value > max_value:
+                parameter['value'] = max_value
+            elif new_value < min_value:
+                parameter['value'] = min_value
+            else:
+                parameter['value'] = new_value
 
 
 class Controller:

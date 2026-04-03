@@ -21,9 +21,9 @@
             "conductivity": "μS"
         },
         "regulators": {
-            "ph": 0.1,
-            "temperature": 0.2,
-            "conductivity": 10
+            "ph": 0.15,
+            "temperature": 0.3,
+            "conductivity": 15
         },
         "other": [
             "lights"
