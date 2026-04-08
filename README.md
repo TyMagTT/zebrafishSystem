@@ -11,3 +11,7 @@ This project simulates a management system controlling water parameters in a zeb
 * Set simulation time
 * Create graphs of parameters in time
 * Save settings
+
+## How does the simulation work?
+
+Every step the controller checks readouts of each meter and compares them to a dict of parameters it was given at the start. If the parameter in the tank read by the meter is lower than the minimum safe value or higher than the maximum safe value, it sounds and alarm. If the value is between the low and high values, nothing happens, and it checks the next parameter. If the value is higher than the high value, it turns off the regulator responsible for raising this parameter, thus letting it fall down to the chosen range naturally. If the value is lower than the low value, the corresponding regulator is turned on, raising the parameter.
