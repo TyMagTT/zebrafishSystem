@@ -77,10 +77,26 @@ def select_language(languages):
             print('Language not found! Try again')
 
 
+def select_option(select_msg, again_msg, options):
+    selected = False
+    full_message = f'{select_msg} '
+    for option in options:
+        full_message = f'{full_message} {option},'
+    while not selected:
+        answer = input(f'{full_message}\n')
+        if answer in options:
+            selected = True
+            return answer
+        else:
+            print(again_msg)
+
+
 language_code = select_language(language)
 msg = language[language_code]
-print(msg["test"])
+print(msg['test'])
 sleep(3)
+command = select_option(msg['select_mode'], msg['again'], ['start', 'settings'])
+
 minute_duration = 0.03
 wait_time = 0.001
 frame_number = floor(minute_duration * 60 / wait_time)
@@ -99,9 +115,9 @@ fig, ax = plt.subplots(3, 1)
 
 for meter in saved_values:
     if meter[-2:] == 'ph':
-        plot_values(0, plot_seconds, saved_values[meter], 'pH', 'Steps', 'Unit')
+        plot_values(0, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
     elif meter[-2:] == 're':
-        plot_values(1, plot_seconds, saved_values[meter], 'Temperature', 'Steps', 'Unit')
+        plot_values(1, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
     elif meter[-2:] == 'ty':
-        plot_values(2, plot_seconds, saved_values[meter], 'Water Conductivity', 'Steps', 'Unit')
+        plot_values(2, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
 plt.show()

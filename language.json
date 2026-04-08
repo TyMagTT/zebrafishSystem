@@ -1,11 +1,25 @@
 {
     "en": {
         "name": "English",
-        "test": "This message is in English"
+        "test": "This message is in English",
+        "ph": "pH",
+        "temperature": "Temperature",
+        "conductivity": "Water conductivity",
+        "steps": "Steps",
+        "unit": "Unit",
+        "select_mode": "Select if you want to start the simulation, or change settings first. Avaliable commands:",
+        "again": "Command not recognised, try again"
     },
     "pl": {
         "name": "Polski",
-        "test": "Ta wiadomość jest po polsku"
+        "test": "Ta wiadomość jest po polsku",
+        "ph": "pH",
+        "temperature": "Temperatura",
+        "conductivity": "Przewodność wody",
+        "steps": "Kroki",
+        "unit": "Jednostka",
+        "select_mode": "Wybierz czy rozpocząć symulację, czy zmienić ustawienia. Dostępne polecenia:",
+        "again": "Polecenie nie rozpoznane, spróbuj ponownie"
     },
     "cn": {
         "name": "中文",
