@@ -1,0 +1,14 @@
+{
+    "en": {
+        "name": "English",
+        "test": "This message is in English"
+    },
+    "pl": {
+        "name": "Polski",
+        "test": "Ta wiadomość jest po polsku"
+    },
+    "cn": {
+        "name": "中文",
+        "test": "這則訊息是用中文寫的"
+    }
+}

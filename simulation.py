@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 
 my_parameters = open_file('starting_parameters.json')
 my_settings = open_file('parameter_settings.json')
+language = open_file('language.json')
 tanks, meters, regulators, other = create_components('component_settings.json', my_parameters)
 controller = Controller(tanks, meters, regulators, other, my_settings)
 
@@ -60,6 +61,26 @@ def plot_values(sub_x, x, y, title, x_label, y_label):
     ax[sub_x].set_ylabel(y_label)
 
 
+def select_language(languages):
+    selected = False
+    codes = languages.keys()
+    codes_message = 'avaliable languages:'
+    for code in codes:
+        codes_message = f'{codes_message} {code} ({languages[code]["name"]}),'
+        language_message = f'Input language code, {codes_message}\n'
+    while not selected:
+        answer = input(language_message)
+        if answer in codes:
+            selected = True
+            return answer
+        else:
+            print('Language not found! Try again')
+
+
+language_code = select_language(language)
+msg = language[language_code]
+print(msg["test"])
+sleep(3)
 minute_duration = 0.03
 wait_time = 0.001
 frame_number = floor(minute_duration * 60 / wait_time)
