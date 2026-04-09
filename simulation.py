@@ -91,11 +91,68 @@ def select_option(select_msg, again_msg, options):
             print(again_msg)
 
 
+def set_state(current_state, command):
+    match current_state:
+        case 0:
+            if command == 'run':
+                return 1
+            if command == 'edit':
+                return 5
+        case 1:
+            return 2
+        case 2:
+            if command == 'begin':
+                return 3
+            if command == 'back':
+                return 0
+        case 3:
+            return 4
+        case 4:
+            return 0
+        case 5:
+            pass  # multiple tanks ????
+        case 6:
+            if command == 'ph':
+                return 60
+            if command == 'temp':
+                return 61
+            if command == 'conduct':
+                return 62
+            if command == 'back':
+                return 5
+        case 7:
+            if command == 'ph':
+                return 70
+            if command == 'temp':
+                return 71
+            if command == 'conduct':
+                return 72
+            if command == 'back':
+                return 5
+        case 8:
+            if command == 'ph':
+                return 80
+            if command == 'temp':
+                return 81
+            if command == 'conduct':
+                return 82
+            if command == 'back':
+                return 5
+    if current_state >= 50 and current_state < 60:
+        if command == 'simulation':
+            return 6
+        if command == 'components':
+            return 7
+    raise ValueError
+
+
 language_code = select_language(language)
 msg = language[language_code]
 print(msg['test'])
 sleep(3)
-command = select_option(msg['select_mode'], msg['again'], ['start', 'settings'])
+command = select_option(msg['select_mode'], msg['again'], ['run', 'settings'])
+state = 0
+last_state = 0
 
 minute_duration = 0.03
 wait_time = 0.001
