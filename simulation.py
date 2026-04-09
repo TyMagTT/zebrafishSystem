@@ -1,3 +1,5 @@
+# LIBRARIES
+
 from components import Controller
 from settings_reader import open_file, create_components
 from time import sleep
@@ -5,12 +7,16 @@ from math import floor
 from matplotlib import pyplot as plt
 
 
+# FILES
+
 my_parameters = open_file('starting_parameters.json')
 my_settings = open_file('parameter_settings.json')
-language = open_file('language.json')
+language_file = open_file('language.json')
 tanks, meters, regulators, other = create_components('component_settings.json', my_parameters)
 controller = Controller(tanks, meters, regulators, other, my_settings)
 
+
+# FUNCTIONS
 
 def format_tank_name(tank_object):
     return f'Tank{str(id(tank_object))[-3:]}'
@@ -96,7 +102,7 @@ def select_language(languages):
         answer = input(language_message)
         if answer in codes:
             selected = True
-            return answer
+            return languages[answer]
         else:
             print('Language not found! Try again')
 
@@ -170,13 +176,12 @@ def set_state(current_state, command):
     raise ValueError
 
 
-language_code = select_language(language)
-msg = language[language_code]
+# SIMULATION
+
+msg = select_language(language_file)
 print(msg['test'])
 command = select_option(msg['select_mode'], msg['again'], ['run', 'settings'])
 state = 0
-last_state = 0
-
 minute_duration = 0.03
 wait_time = 0.001
 frame_number = floor(minute_duration * 60 / wait_time)
