@@ -61,6 +61,18 @@ def plot_values(sub_x, x, y, title, x_label, y_label):
     ax[sub_x].set_ylabel(y_label)
 
 
+def simulate(tanks, meters, controller, frame_number, wait_time):
+    saved_values = {}
+    for i in range(frame_number):
+        for tank in tanks:
+            tank.simulate()
+        controller.step()
+        print_current_values(meters)
+        save_values(saved_values)
+        sleep(wait_time)
+    return saved_values
+
+
 def select_language(languages):
     selected = False
     codes = languages.keys()
@@ -158,16 +170,7 @@ minute_duration = 0.03
 wait_time = 0.001
 frame_number = floor(minute_duration * 60 / wait_time)
 plot_seconds = list(range(0, frame_number))
-saved_values = {}
-
-for i in range(frame_number):
-    for tank in tanks:
-        tank.simulate()
-    controller.step()
-    print_current_values(meters)
-    save_values(saved_values)
-    sleep(wait_time)
-
+saved_values = simulate(tanks, meters, controller, frame_number, wait_time)
 fig, ax = plt.subplots(3, 1)
 
 for meter in saved_values:
