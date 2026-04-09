@@ -121,8 +121,8 @@ def select_option(select_msg, again_msg, options):
             print(again_msg)
 
 
-def set_state(current_state, command):
-    match current_state:
+def set_state(state, command):
+    match state:
         case 0:
             if command == 'run':
                 return 1
@@ -168,7 +168,7 @@ def set_state(current_state, command):
                 return 82
             if command == 'back':
                 return 5
-    if current_state >= 50 and current_state < 60:
+    if state >= 50 and state < 60:
         if command == 'simulation':
             return 6
         if command == 'components':
@@ -176,12 +176,20 @@ def set_state(current_state, command):
     raise ValueError
 
 
+def execute_state(state):
+    match state:
+        case 0:
+            pass
+    raise ValueError
+
+
 # SIMULATION
 
 msg = select_language(language_file)
 print(msg['test'])
-command = select_option(msg['select_mode'], msg['again'], ['run', 'settings'])
+
 state = 0
+command = select_option(msg['select_mode'], msg['again'], ['run', 'settings'])
 minute_duration = 0.03
 wait_time = 0.001
 frame_number = floor(minute_duration * 60 / wait_time)
