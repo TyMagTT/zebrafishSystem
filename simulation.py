@@ -73,6 +73,18 @@ def simulate(tanks, meters, controller, frame_number, wait_time):
     return saved_values
 
 
+def create_graph(frame_number, saved_values, msg):
+    plot_seconds = list(range(0, frame_number))
+    for meter in saved_values:
+        if meter[-2:] == 'ph':
+            plot_values(0, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
+        elif meter[-2:] == 're':
+            plot_values(1, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
+        elif meter[-2:] == 'ty':
+            plot_values(2, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
+    plt.show()
+
+
 def select_language(languages):
     selected = False
     codes = languages.keys()
@@ -169,15 +181,7 @@ last_state = 0
 minute_duration = 0.03
 wait_time = 0.001
 frame_number = floor(minute_duration * 60 / wait_time)
-plot_seconds = list(range(0, frame_number))
 saved_values = simulate(tanks, meters, controller, frame_number, wait_time)
 fig, ax = plt.subplots(3, 1)
 
-for meter in saved_values:
-    if meter[-2:] == 'ph':
-        plot_values(0, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
-    elif meter[-2:] == 're':
-        plot_values(1, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
-    elif meter[-2:] == 'ty':
-        plot_values(2, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
-plt.show()
+create_graph(frame_number, saved_values, msg)
