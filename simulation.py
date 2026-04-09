@@ -173,7 +173,6 @@ def set_state(current_state, command):
 language_code = select_language(language)
 msg = language[language_code]
 print(msg['test'])
-sleep(3)
 command = select_option(msg['select_mode'], msg['again'], ['run', 'settings'])
 state = 0
 last_state = 0
@@ -183,5 +182,4 @@ wait_time = 0.001
 frame_number = floor(minute_duration * 60 / wait_time)
 saved_values = simulate(tanks, meters, controller, frame_number, wait_time)
 fig, ax = plt.subplots(3, 1)
-
 create_graph(frame_number, saved_values, msg)
