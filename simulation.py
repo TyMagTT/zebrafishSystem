@@ -189,7 +189,8 @@ def next_state(state, command):
 def execute_state(state):
     match state:
         case -1:
-            quit('\nProgram terminated by user')
+            message = f'\n{msg['exit']}'
+            quit(message)
         case 0:
             command = select_option(msg['select_mode'], msg['again'], ['run', 'edit', 'exit'])
             data = None

@@ -2,6 +2,7 @@
     "en": {
         "name": "English",
         "test": "This message is in English",
+        "exit": "Program terminated by user",
         "ph": "pH",
         "temperature": "Temperature",
         "conductivity": "Water conductivity",
@@ -16,16 +17,16 @@
     "pl": {
         "name": "Polski",
         "test": "Ta wiadomość jest po polsku",
+        "exit": "Program zakończony przez użytkownika",
         "ph": "pH",
         "temperature": "Temperatura",
         "conductivity": "Przewodność wody",
         "steps": "Kroki",
         "unit": "Jednostka",
-        "select_mode": "Wybierz czy rozpocząć symulację, czy zmienić ustawienia. Dostępne polecenia:",
-        "again": "Polecenie nie rozpoznane, spróbuj ponownie"
-    },
-    "cn": {
-        "name": "中文",
-        "test": "這則訊息是用中文寫的"
+        "select_mode": "Podaj 'run' aby przejść do symulacji, 'edit', aby przejść do ustawień lub 'exit' aby zakończyć program. Dostępne polecenia:",
+        "again": "Polecenie nie rozpoznane, spróbuj ponownie",
+        "select_duration": "Podaj czas trwania symulacji w sekundach.",
+        "begin": "Aby rozpocząć symulację podaj 'begin', lub 'back' aby wrócić do ustawień.  Dostępne polecenia:",
+        "save_graph": "Zapisać wykres? 'yes' jeśli tak, 'no' jeśli nie. Dostępne polecenia:"
     }
 }
