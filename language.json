@@ -7,8 +7,11 @@
         "conductivity": "Water conductivity",
         "steps": "Steps",
         "unit": "Unit",
-        "select_mode": "Select if you want to start the simulation, or change settings first. Avaliable commands:",
-        "again": "Command not recognised, try again"
+        "select_mode": "Select if you want to start the simulation, change settings or exit. Avaliable commands:",
+        "again": "Command not recognised, try again",
+        "select_duration": "Input the duration of the simulation in seconds.",
+        "begin": "Begin simulation or go back to settings? Avaliable commands:",
+        "save_graph": "Save the graph? Options:"
     },
     "pl": {
         "name": "Polski",
