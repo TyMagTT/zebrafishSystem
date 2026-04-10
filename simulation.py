@@ -145,7 +145,8 @@ def next_state(state, command):
             if command == 'yes':
                 return 41
         case 5:
-            pass  # multiple tanks ????
+            if command == 'back':
+                return 0
         case 6:
             if command == 'ph':
                 return 60
@@ -218,6 +219,18 @@ def execute_state(state):
             command = select_option(msg['save_graph'], msg['again'], ['no', 'yes'])
             data = None
             return command, data
+        case 5:
+            command = select_option(msg['test'], msg['again'], ['back'])
+            data = None
+            return command, data
+        case 6:
+            command = None
+            data = None
+            return command, data
+        case 7:
+            command = None
+            data = None
+            return command, data
         case 40:
             command = None
             data = None
@@ -232,8 +245,6 @@ def execute_state(state):
 # SIMULATION
 
 msg = select_language(language_file)
-print(msg['test'])
-
 state = 0
 frame_number = 0
 wait_time = 0.001
