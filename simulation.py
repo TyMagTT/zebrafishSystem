@@ -261,6 +261,3 @@ while on:
     elif state == 3:
         saved_values = data
     state = next_state(state, command)
-
-# saved_values = simulate(tanks, meters, controller, frame_number, wait_time)
-# create_graph(frame_number, saved_values, msg)
