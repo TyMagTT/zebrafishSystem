@@ -13,7 +13,7 @@ my_parameters = open_file('starting_parameters.json')
 my_settings = open_file('parameter_settings.json')
 language_file = open_file('language.json')
 tanks, meters, regulators, other = create_components('component_settings.json', my_parameters)
-controller = Controller(tanks, meters, regulators, other, my_settings)
+controller = None
 
 
 # FUNCTIONS
@@ -145,6 +145,8 @@ def next_state(state, command):
             if command == 'yes':
                 return 41
         case 5:
+            if command == 'controller':
+                return 8
             if command == 'back':
                 return 0
         case 6:
@@ -178,7 +180,25 @@ def next_state(state, command):
             return 0
         case 41:
             return 0
-    if state >= 50 and state < 60:
+        case 60:
+            return 6
+        case 61:
+            return 6
+        case 62:
+            return 6
+        case 70:
+            return 7
+        case 71:
+            return 7
+        case 72:
+            return 7
+        case 80:
+            return 8
+        case 81:
+            return 8
+        case 82:
+            return 8
+    if state >= 500 and state < 600:
         if command == 'simulation':
             return 6
         if command == 'components':
@@ -213,6 +233,7 @@ def execute_state(state):
             return command, data
         case 3:
             command = None
+            controller = Controller(tanks, meters, regulators, other, my_settings)
             data = simulate(tanks, meters, controller, frame_number, wait_time)
             return command, data
         case 4:
@@ -221,7 +242,7 @@ def execute_state(state):
             data = None
             return command, data
         case 5:
-            command = select_option(msg['test'], msg['again'], ['back'])
+            command = select_option(msg['test'], msg['again'], ['controller', 'back'])
             data = None
             return command, data
         case 6:
@@ -232,11 +253,119 @@ def execute_state(state):
             command = None
             data = None
             return command, data
+        case 8:
+            for type in my_settings:
+                id = type['id']
+                alarm_low = type['alarm_low']
+                low_value = type['low_value']
+                high_value = type['high_value']
+                alarm_high = type['alarm_high']
+                print(f'\n{id}:')
+                print(f'alarm_low: {alarm_low}')
+                print(f'low_value: {low_value}')
+                print(f'high_value: {high_value}')
+                print(f'alarm_high: {alarm_high}')
+            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'back'])
+            data = None
+            return command, data
         case 40:
             command = None
             data = None
             return command, data
         case 41:
+            command = None
+            data = None
+            return command, data
+        case 60:
+            command = None
+            data = None
+            return command, data
+        case 61:
+            command = None
+            data = None
+            return command, data
+        case 62:
+            command = None
+            data = None
+            return command, data
+        case 70:
+            command = None
+            data = None
+            return command, data
+        case 71:
+            command = None
+            data = None
+            return command, data
+        case 72:
+            command = None
+            data = None
+            return command, data
+        case 80:
+            command = None
+            number = False
+            while not number:
+                message = f'{msg['new_value']}\n'
+                data = input(message)
+                try:
+                    data = float(data)
+                    data = round(data, 3)
+                    number = True
+                except ValueError:
+                    print(msg['again'])
+            return command, data
+        case 81:
+            command = None
+            data = None
+            return command, data
+        case 82:
+            command = None
+            data = None
+            return command, data
+        case 800:
+            command = None
+            data = None
+            return command, data
+        case 801:
+            command = None
+            data = None
+            return command, data
+        case 802:
+            command = None
+            data = None
+            return command, data
+        case 803:
+            command = None
+            data = None
+            return command, data
+        case 810:
+            command = None
+            data = None
+            return command, data
+        case 811:
+            command = None
+            data = None
+            return command, data
+        case 812:
+            command = None
+            data = None
+            return command, data
+        case 813:
+            command = None
+            data = None
+            return command, data
+        case 820:
+            command = None
+            data = None
+            return command, data
+        case 821:
+            command = None
+            data = None
+            return command, data
+        case 822:
+            command = None
+            data = None
+            return command, data
+        case 823:
             command = None
             data = None
             return command, data
