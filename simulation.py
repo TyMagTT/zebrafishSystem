@@ -88,7 +88,6 @@ def create_graph(frame_number, saved_values, msg):
             plot_values(1, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
         elif meter[-2:] == 'ty':
             plot_values(2, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
-    plt.show()
 
 
 def select_language(languages):
@@ -300,10 +299,14 @@ def execute_state(state):
         case 40:
             command = None
             data = None
+            plt.show()
             return command, data
         case 41:
             command = None
+            name = input(f'{msg['graph_name']}\n')
+            plt.savefig(f'{name}.png')
             data = None
+            plt.show()
             return command, data
         case 60:
             command = None

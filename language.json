@@ -15,7 +15,8 @@
         "save_graph": "Save the graph? Options:",
         "edit_param": "Choose which parameter to edit. Avaliable commands:",
         "new_value": "Input new value",
-        "choose_point": "Choose which value to edit. Avaliable values:"
+        "choose_point": "Choose which value to edit. Avaliable values:",
+        "graph_name": "Input the name of the file"
     },
     "pl": {
         "name": "Polski",
