@@ -333,15 +333,15 @@ def execute_state(state):
             data = None
             return command, data
         case 80:
-            command = select_option(msg['choose_point'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
+            command = select_option(msg['edit_param'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
             data = None
             return command, data
         case 81:
-            command = select_option(msg['choose_point'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
+            command = select_option(msg['edit_param'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
             data = None
             return command, data
         case 82:
-            command = select_option(msg['choose_point'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
+            command = select_option(msg['edit_param'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
             data = None
             return command, data
         case 600:
@@ -416,63 +416,19 @@ def execute_state(state):
             command = None
             data = None
             return command, data
-        case 800:
-            command = None
-            number = False
-            while not number:
-                message = f'{msg['new_value']}\n'
-                data = input(message)
-                try:
-                    data = float(data)
-                    data = round(data, 3)
-                    number = True
-                except ValueError:
-                    print(msg['again'])
-            return command, data
-        case 801:
-            command = None
-            data = None
-            return command, data
-        case 802:
-            command = None
-            data = None
-            return command, data
-        case 803:
-            command = None
-            data = None
-            return command, data
-        case 810:
-            command = None
-            data = None
-            return command, data
-        case 811:
-            command = None
-            data = None
-            return command, data
-        case 812:
-            command = None
-            data = None
-            return command, data
-        case 813:
-            command = None
-            data = None
-            return command, data
-        case 820:
-            command = None
-            data = None
-            return command, data
-        case 821:
-            command = None
-            data = None
-            return command, data
-        case 822:
-            command = None
-            data = None
-            return command, data
-        case 823:
-            command = None
-            data = None
-            return command, data
+    if state >= 800 and state < 900:
+        command = None
+        number = False
+        while not number:
+            message = f'{msg['new_value']}\n'
+            data = input(message)
+            try:
+                data = float(data)
+                data = round(data, 3)
+                number = True
+            except ValueError:
+                print(msg['again'])
+        return command, data
     raise ValueError
 
 

@@ -15,7 +15,6 @@
         "save_graph": "Save the graph? Options:",
         "edit_param": "Choose which parameter to edit. Avaliable commands:",
         "new_value": "Input new value",
-        "choose_point": "Choose which value to edit. Avaliable values:",
         "graph_name": "Input the name of the file"
     },
     "pl": {
@@ -31,6 +30,9 @@
         "again": "Polecenie nie rozpoznane, spróbuj ponownie",
         "select_duration": "Podaj czas trwania symulacji w sekundach.",
         "begin": "Aby rozpocząć symulację podaj 'begin', lub 'back' aby wrócić do ustawień.  Dostępne polecenia:",
-        "save_graph": "Zapisać wykres? 'yes' jeśli tak, 'no' jeśli nie. Dostępne polecenia:"
+        "save_graph": "Zapisać wykres? 'yes' jeśli tak, 'no' jeśli nie. Dostępne polecenia:",
+        "edit_param": "Wybierz które wartości edytować. Dostępne polecenia:",
+        "new_value": "Podaj nową wartość",
+        "graph_name": "Podaj nazwę pliku"
     }
 }
