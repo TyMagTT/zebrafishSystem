@@ -193,16 +193,45 @@ def next_state(state, command):
         case 72:
             return 7
         case 80:
-            return 8
+            if command == 'alarm_low':
+                return 800
+            if command == 'low_value':
+                return 801
+            if command == 'high_value':
+                return 802
+            if command == 'alarm_high':
+                return 803
+            if command == 'back':
+                return 8
         case 81:
-            return 8
+            if command == 'alarm_low':
+                return 810
+            if command == 'low_value':
+                return 811
+            if command == 'high_value':
+                return 812
+            if command == 'alarm_high':
+                return 813
+            if command == 'back':
+                return 8
         case 82:
-            return 8
+            if command == 'alarm_low':
+                return 820
+            if command == 'low_value':
+                return 821
+            if command == 'high_value':
+                return 822
+            if command == 'alarm_high':
+                return 823
+            if command == 'back':
+                return 8
     if state >= 500 and state < 600:
         if command == 'simulation':
             return 6
         if command == 'components':
             return 7
+    if state >= 800 and state < 900:
+        return 8
     raise ValueError
 
 
@@ -242,7 +271,7 @@ def execute_state(state):
             data = None
             return command, data
         case 5:
-            command = select_option(msg['test'], msg['again'], ['controller', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['controller', 'back'])
             data = None
             return command, data
         case 6:
@@ -301,6 +330,90 @@ def execute_state(state):
             data = None
             return command, data
         case 80:
+            command = select_option(msg['choose_point'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
+            data = None
+            return command, data
+        case 81:
+            command = select_option(msg['choose_point'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
+            data = None
+            return command, data
+        case 82:
+            command = select_option(msg['choose_point'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
+            data = None
+            return command, data
+        case 600:
+            command = None
+            data = None
+            return command, data
+        case 601:
+            command = None
+            data = None
+            return command, data
+        case 602:
+            command = None
+            data = None
+            return command, data
+        case 603:
+            command = None
+            data = None
+            return command, data
+        case 610:
+            command = None
+            data = None
+            return command, data
+        case 611:
+            command = None
+            data = None
+            return command, data
+        case 612:
+            command = None
+            data = None
+            return command, data
+        case 613:
+            command = None
+            data = None
+            return command, data
+        case 620:
+            command = None
+            data = None
+            return command, data
+        case 621:
+            command = None
+            data = None
+            return command, data
+        case 622:
+            command = None
+            data = None
+            return command, data
+        case 623:
+            command = None
+            data = None
+            return command, data
+        case 700:
+            command = None
+            data = None
+            return command, data
+        case 701:
+            command = None
+            data = None
+            return command, data
+        case 710:
+            command = None
+            data = None
+            return command, data
+        case 711:
+            command = None
+            data = None
+            return command, data
+        case 720:
+            command = None
+            data = None
+            return command, data
+        case 721:
+            command = None
+            data = None
+            return command, data
+        case 800:
             command = None
             number = False
             while not number:
@@ -312,18 +425,6 @@ def execute_state(state):
                     number = True
                 except ValueError:
                     print(msg['again'])
-            return command, data
-        case 81:
-            command = None
-            data = None
-            return command, data
-        case 82:
-            command = None
-            data = None
-            return command, data
-        case 800:
-            command = None
-            data = None
             return command, data
         case 801:
             command = None
