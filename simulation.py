@@ -490,4 +490,24 @@ while on:
         frame_number = floor(second_duration / wait_time)
     elif state == 3:
         saved_values = data
+    elif state >= 800 and state < 900:
+        state_string = str(state)
+        state_numbers = list(state_string)
+        if state_numbers[1] == '0':
+            param = 'ph'
+        elif state_numbers[1] == '1':
+            param = 'temperature'
+        elif state_numbers[1] == '2':
+            param = 'conductivity'
+        if state_numbers[2] == '0':
+            value = 'alarm_low'
+        elif state_numbers[2] == '1':
+            value = 'low_value'
+        elif state_numbers[2] == '2':
+            value = 'high_value'
+        elif state_numbers[2] == '3':
+            value = 'alarm_high'
+        for setting in my_settings:
+            if setting['id'] == param:
+                setting[value] = data
     state = next_state(state, command)

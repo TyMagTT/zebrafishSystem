@@ -13,8 +13,9 @@
         "select_duration": "Input the duration of the simulation in seconds.",
         "begin": "Begin simulation or go back to settings? Avaliable commands:",
         "save_graph": "Save the graph? Options:",
-        "edit_param": "Check which parameter to edit. Avaliable commands:",
-        "new_value": "Input new value"
+        "edit_param": "Choose which parameter to edit. Avaliable commands:",
+        "new_value": "Input new value",
+        "choose_point": "Choose which value to edit. Avaliable values:"
     },
     "pl": {
         "name": "Polski",
