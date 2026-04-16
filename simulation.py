@@ -144,6 +144,9 @@ def next_state(state, command):
             if command == 'yes':
                 return 41
         case 5:
+            if command.startswith('Tank', 0, 4):
+                new_state = int(command.replace('Tank', ''))
+                return new_state
             if command == 'controller':
                 return 8
             if command == 'back':
@@ -229,6 +232,8 @@ def next_state(state, command):
             return 6
         if command == 'components':
             return 7
+        if command == 'back':
+            return 5
     if state >= 800 and state < 900:
         return 8
     raise ValueError
@@ -270,7 +275,11 @@ def execute_state(state):
             data = None
             return command, data
         case 5:
-            command = select_option(msg['edit_param'], msg['again'], ['controller', 'back'])
+            tank_states = list(range(len(tanks)))
+            for state in tank_states:
+                tank_states[state] = f'Tank{str(state + 500)}'
+            other_states = ['controller', 'back']
+            command = select_option(msg['edit_param'], msg['again'], tank_states + other_states)
             data = None
             return command, data
         case 6:
@@ -416,6 +425,10 @@ def execute_state(state):
             command = None
             data = None
             return command, data
+    if state >= 500 and state < 600:
+        command = select_option(msg['edit_param'], ['again'], ['simulation', 'components', 'back'])
+        data = None
+        return command, data
     if state >= 800 and state < 900:
         command = None
         number = False
@@ -449,6 +462,8 @@ while on:
         frame_number = floor(second_duration / wait_time)
     elif state == 3:
         saved_values = data
+    elif state >= 500 and state < 600:
+        pass
     elif state >= 800 and state < 900:
         state_string = str(state)
         state_numbers = list(state_string)
