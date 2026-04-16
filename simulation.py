@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 my_parameters = open_file('starting_parameters.json')
 my_settings = open_file('parameter_settings.json')
 language_file = open_file('language.json')
-tanks, meters, regulators, other = create_components('component_settings.json', my_parameters)
+tanks, meters, regulators, other = None, None, None, None
 controller = None
 
 
@@ -46,7 +46,7 @@ def print_current_values(meters):
         print(formatted)
 
 
-def save_values(dictionary):
+def save_values(dictionary, meters):
     readings = check_meters(meters)
     for reading in readings:
         tank, type, value, unit, working = reading
@@ -74,7 +74,7 @@ def simulate(tanks, meters, controller, frame_number, wait_time):
             tank.simulate()
         controller.step()
         print_current_values(meters)
-        save_values(saved_values)
+        save_values(saved_values, meters)
         sleep(wait_time)
     return saved_values
 
@@ -295,6 +295,7 @@ def execute_state(state):
             return command, data
         case 3:
             command = None
+            tanks, meters, regulators, other = create_components('component_settings.json', my_parameters)
             controller = Controller(tanks, meters, regulators, other, my_settings)
             data = simulate(tanks, meters, controller, frame_number, wait_time)
             return command, data
@@ -304,6 +305,7 @@ def execute_state(state):
             data = None
             return command, data
         case 5:
+            tanks, meters, regulators, other = create_components('component_settings.json', my_parameters)
             tank_states = list(range(len(tanks)))
             for state in tank_states:
                 tank_states[state] = f'Tank{str(state + 500)}'
