@@ -183,11 +183,38 @@ def next_state(state, command):
         case 41:
             return 0
         case 60:
-            return 6
+            if command == 'value':
+                return 600
+            if command == 'change':
+                return 601
+            if command == 'max':
+                return 602
+            if command == 'min':
+                return 603
+            if command == 'back':
+                return 6
         case 61:
-            return 6
+            if command == 'value':
+                return 610
+            if command == 'change':
+                return 611
+            if command == 'max':
+                return 612
+            if command == 'min':
+                return 613
+            if command == 'back':
+                return 6
         case 62:
-            return 6
+            if command == 'value':
+                return 620
+            if command == 'change':
+                return 621
+            if command == 'max':
+                return 622
+            if command == 'min':
+                return 623
+            if command == 'back':
+                return 6
         case 70:
             return 7
         case 71:
@@ -234,6 +261,8 @@ def next_state(state, command):
             return 7
         if command == 'back':
             return 5
+    if state >= 600 and state < 700:
+        return 6
     if state >= 800 and state < 900:
         return 8
     raise ValueError
@@ -283,7 +312,18 @@ def execute_state(state):
             data = None
             return command, data
         case 6:
-            command = None
+            for type in my_parameters:
+                id = type['id']
+                value = type['value']
+                change = type['simulation']['average_change']
+                maximum = type['simulation']['max_value']
+                minimum = type['simulation']['min_value']
+                print(f'\n{id}:')
+                print(f'value: {value}')
+                print(f'change: {change}')
+                print(f'max: {maximum}')
+                print(f'min: {minimum}')
+            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'back'])
             data = None
             return command, data
         case 7:
@@ -318,15 +358,15 @@ def execute_state(state):
             plt.show()
             return command, data
         case 60:
-            command = None
+            command = select_option(msg['edit_param'], ['again'], ['value', 'change', 'max', 'min', 'back'])
             data = None
             return command, data
         case 61:
-            command = None
+            command = select_option(msg['edit_param'], ['again'], ['value', 'change', 'max', 'min', 'back'])
             data = None
             return command, data
         case 62:
-            command = None
+            command = select_option(msg['edit_param'], ['again'], ['value', 'change', 'max', 'min', 'back'])
             data = None
             return command, data
         case 70:
@@ -351,54 +391,6 @@ def execute_state(state):
             return command, data
         case 82:
             command = select_option(msg['edit_param'], ['again'], ['min', 'low', 'high', 'max', 'back'])
-            data = None
-            return command, data
-        case 600:
-            command = None
-            data = None
-            return command, data
-        case 601:
-            command = None
-            data = None
-            return command, data
-        case 602:
-            command = None
-            data = None
-            return command, data
-        case 603:
-            command = None
-            data = None
-            return command, data
-        case 610:
-            command = None
-            data = None
-            return command, data
-        case 611:
-            command = None
-            data = None
-            return command, data
-        case 612:
-            command = None
-            data = None
-            return command, data
-        case 613:
-            command = None
-            data = None
-            return command, data
-        case 620:
-            command = None
-            data = None
-            return command, data
-        case 621:
-            command = None
-            data = None
-            return command, data
-        case 622:
-            command = None
-            data = None
-            return command, data
-        case 623:
-            command = None
             data = None
             return command, data
         case 700:
@@ -429,6 +421,19 @@ def execute_state(state):
         command = select_option(msg['edit_param'], ['again'], ['simulation', 'components', 'back'])
         data = None
         return command, data
+    if state >= 600 and state < 700:
+        command = None
+        number = False
+        while not number:
+            message = f'{msg['new_value']}\n'
+            data = input(message)
+            try:
+                data = float(data)
+                data = round(data, 3)
+                number = True
+            except ValueError:
+                print(msg['again'])
+        return command, data
     if state >= 800 and state < 900:
         command = None
         number = False
@@ -452,8 +457,8 @@ state = 0
 frame_number = 0
 wait_time = 0.001
 saved_values = {}
-fig, ax = plt.subplots(3, 1)
 on = True
+last_tank_number = 0
 
 while on:
     command, data = execute_state(state)
@@ -462,8 +467,32 @@ while on:
         frame_number = floor(second_duration / wait_time)
     elif state == 3:
         saved_values = data
+        fig, ax = plt.subplots(3, 1)
     elif state >= 500 and state < 600:
-        pass
+        last_tank_number = state - 500
+    elif state >= 600 and state < 700:
+        state_string = str(state)
+        state_numbers = list(state_string)
+        if state_numbers[1] == '0':
+            param = 'ph'
+        elif state_numbers[1] == '1':
+            param = 'temperature'
+        elif state_numbers[1] == '2':
+            param = 'conductivity'
+        if state_numbers[2] == '0':
+            value = 'value'
+        elif state_numbers[2] == '1':
+            value = 'average_change'
+        elif state_numbers[2] == '2':
+            value = 'max_value'
+        elif state_numbers[2] == '3':
+            value = 'min_value'
+        for parameter in my_parameters:
+            if parameter['id'] == param:
+                if value == 'value':
+                    parameter['value'] = data
+                else:
+                    parameter['simulation'][value] = data
     elif state >= 800 and state < 900:
         state_string = str(state)
         state_numbers = list(state_string)
