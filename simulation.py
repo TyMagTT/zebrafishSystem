@@ -192,35 +192,35 @@ def next_state(state, command):
         case 72:
             return 7
         case 80:
-            if command == 'alarm_low':
+            if command == 'min':
                 return 800
-            if command == 'low_value':
+            if command == 'low':
                 return 801
-            if command == 'high_value':
+            if command == 'high':
                 return 802
-            if command == 'alarm_high':
+            if command == 'max':
                 return 803
             if command == 'back':
                 return 8
         case 81:
-            if command == 'alarm_low':
+            if command == 'min':
                 return 810
-            if command == 'low_value':
+            if command == 'low':
                 return 811
-            if command == 'high_value':
+            if command == 'high':
                 return 812
-            if command == 'alarm_high':
+            if command == 'max':
                 return 813
             if command == 'back':
                 return 8
         case 82:
-            if command == 'alarm_low':
+            if command == 'min':
                 return 820
-            if command == 'low_value':
+            if command == 'low':
                 return 821
-            if command == 'high_value':
+            if command == 'high':
                 return 822
-            if command == 'alarm_high':
+            if command == 'max':
                 return 823
             if command == 'back':
                 return 8
@@ -289,10 +289,10 @@ def execute_state(state):
                 high_value = type['high_value']
                 alarm_high = type['alarm_high']
                 print(f'\n{id}:')
-                print(f'alarm_low: {alarm_low}')
-                print(f'low_value: {low_value}')
-                print(f'high_value: {high_value}')
-                print(f'alarm_high: {alarm_high}')
+                print(f'min: {alarm_low}')
+                print(f'low: {low_value}')
+                print(f'high: {high_value}')
+                print(f'max: {alarm_high}')
             command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'back'])
             data = None
             return command, data
@@ -333,15 +333,15 @@ def execute_state(state):
             data = None
             return command, data
         case 80:
-            command = select_option(msg['edit_param'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
+            command = select_option(msg['edit_param'], ['again'], ['min', 'low', 'high', 'max', 'back'])
             data = None
             return command, data
         case 81:
-            command = select_option(msg['edit_param'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
+            command = select_option(msg['edit_param'], ['again'], ['min', 'low', 'high', 'max', 'back'])
             data = None
             return command, data
         case 82:
-            command = select_option(msg['edit_param'], ['again'], ['alarm_low', 'low_value', 'high_value', 'alarm_high', 'back'])
+            command = select_option(msg['edit_param'], ['again'], ['min', 'low', 'high', 'max', 'back'])
             data = None
             return command, data
         case 600:
