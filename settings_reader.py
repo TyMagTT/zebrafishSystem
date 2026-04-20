@@ -13,6 +13,11 @@ def open_file(path):
     return setting_list
 
 
+def save_file(values, path):
+    with open(path, 'w') as file_handle:
+        json.dump(values, file_handle, indent=4)
+
+
 def create_components(component_list, tank_settings):
     tank_list = []
     meter_list = []
