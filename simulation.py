@@ -429,6 +429,13 @@ def execute_state(state, last_tank):
             command = select_option(msg['edit_param'], msg['again'], ['speed', 'unit', 'back'])
             data = None
             return command, data
+        case 79:
+            command = select_option(msg['save'], msg['again'], ['yes', 'no'])
+            data = None
+            if command == 'yes':
+                save_file(my_components, 'component_settings.json')
+                print(msg['saved'])
+            return command, data
         case 80:
             command = select_option(msg['edit_param'], msg['again'], ['min', 'low', 'high', 'max', 'back'])
             data = None
@@ -440,6 +447,13 @@ def execute_state(state, last_tank):
         case 82:
             command = select_option(msg['edit_param'], msg['again'], ['min', 'low', 'high', 'max', 'back'])
             data = None
+            return command, data
+        case 89:
+            command = select_option(msg['save'], msg['again'], ['yes', 'no'])
+            data = None
+            if command == 'yes':
+                save_file(my_settings, 'parameter_settings.json')
+                print(msg['saved'])
             return command, data
     if state >= 500 and state < 600:
         command = select_option(msg['edit_param'], msg['again'], ['simulation', 'components', 'back'])

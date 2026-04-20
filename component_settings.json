@@ -2,8 +2,8 @@
     {
         "meters": {
             "ph": "pH",
-            "temperature": "°C",
-            "conductivity": "μS"
+            "temperature": "\u00b0C",
+            "conductivity": "\u03bcS"
         },
         "regulators": {
             "ph": 0.1,
@@ -17,8 +17,8 @@
     {
         "meters": {
             "ph": "pH",
-            "temperature": "°C",
-            "conductivity": "μS"
+            "temperature": "celsius",
+            "conductivity": "\u03bcS"
         },
         "regulators": {
             "ph": 0.15,
