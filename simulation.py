@@ -286,7 +286,7 @@ def next_state(state, command):
     raise ValueError
 
 
-def execute_state(state):
+def execute_state(state, last_tank):
     match state:
         case -1:
             message = f'\n{msg['exit']}'
@@ -347,7 +347,14 @@ def execute_state(state):
             data = None
             return command, data
         case 7:
-            command = None
+            my_tank = my_components[last_tank]
+            for id in my_tank['regulators']:
+                speed = my_tank['regulators'][id]
+                unit = my_tank['meters'][id]
+                print(f'\n{id}:')
+                print(f'speed: {speed}')
+                print(f'unit: {unit}')
+            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'back'])
             data = None
             return command, data
         case 8:
@@ -390,15 +397,15 @@ def execute_state(state):
             data = None
             return command, data
         case 70:
-            command = None
+            command = select_option(msg['edit_param'], msg['again'], ['speed', 'unit', 'back'])
             data = None
             return command, data
         case 71:
-            command = None
+            command = select_option(msg['edit_param'], msg['again'], ['speed', 'unit', 'back'])
             data = None
             return command, data
         case 72:
-            command = None
+            command = select_option(msg['edit_param'], msg['again'], ['speed', 'unit', 'back'])
             data = None
             return command, data
         case 80:
@@ -411,30 +418,6 @@ def execute_state(state):
             return command, data
         case 82:
             command = select_option(msg['edit_param'], msg['again'], ['min', 'low', 'high', 'max', 'back'])
-            data = None
-            return command, data
-        case 700:
-            command = None
-            data = None
-            return command, data
-        case 701:
-            command = None
-            data = None
-            return command, data
-        case 710:
-            command = None
-            data = None
-            return command, data
-        case 711:
-            command = None
-            data = None
-            return command, data
-        case 720:
-            command = None
-            data = None
-            return command, data
-        case 721:
-            command = None
             data = None
             return command, data
     if state >= 500 and state < 600:
@@ -452,7 +435,33 @@ def execute_state(state):
                 data = round(data, 3)
                 number = True
             except ValueError:
-                print(msg['again'])
+                print(msg['again_number'])
+        return command, data
+    if state >= 700 and state < 800:
+        command = None
+        data = None
+        if state % 10 == 0:
+            number = False
+            while not number:
+                message = f'{msg['new_value']}\n'
+                data = input(message)
+                try:
+                    data = float(data)
+                    data = round(data, 3)
+                    number = True
+                except ValueError:
+                    print(msg['again_number'])
+        elif state % 10 == 1:
+            string = False
+            while not string:
+                message = f'{msg['new_value']}\n'
+                data = input(message)
+                if isinstance(data, str):
+                    string = True
+                else:
+                    print(msg['again'])
+        else:
+            raise ValueError
         return command, data
     if state >= 800 and state < 900:
         command = None
@@ -465,7 +474,7 @@ def execute_state(state):
                 data = round(data, 3)
                 number = True
             except ValueError:
-                print(msg['again'])
+                print(msg['again_number'])
         return command, data
     raise ValueError
 
@@ -481,7 +490,7 @@ on = True
 last_tank_number = 0
 
 while on:
-    command, data = execute_state(state)
+    command, data = execute_state(state, last_tank_number)
     if state == 1:
         second_duration = data
         frame_number = floor(second_duration / wait_time)
@@ -507,12 +516,30 @@ while on:
             value = 'max_value'
         elif state_numbers[2] == '3':
             value = 'min_value'
+        else:
+            raise ValueError
         for parameter in my_parameters:
             if parameter['id'] == param:
                 if value == 'value':
                     parameter['value'] = data
                 else:
                     parameter['simulation'][value] = data
+    elif state >= 700 and state < 800:
+        state_string = str(state)
+        state_numbers = list(state_string)
+        if state_numbers[1] == '0':
+            param = 'ph'
+        elif state_numbers[1] == '1':
+            param = 'temperature'
+        elif state_numbers[1] == '2':
+            param = 'conductivity'
+        if state_numbers[2] == '0':
+            value = 'regulators'
+        elif state_numbers[2] == '1':
+            value = 'meters'
+        else:
+            raise ValueError
+        my_components[last_tank_number][value][param] = data
     elif state >= 800 and state < 900:
         state_string = str(state)
         state_numbers = list(state_string)
@@ -530,6 +557,8 @@ while on:
             value = 'high_value'
         elif state_numbers[2] == '3':
             value = 'alarm_high'
+        else:
+            raise ValueError
         for setting in my_settings:
             if setting['id'] == param:
                 setting[value] = data
