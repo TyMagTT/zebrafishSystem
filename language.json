@@ -17,7 +17,9 @@
         "edit_param": "Choose which parameter to edit. Avaliable commands:",
         "new_value": "Input new value",
         "graph_name": "Input the name of the file",
-        "close_graph": "Close graph window to continue"
+        "close_graph": "Close graph window to continue",
+        "save": "Save data? Options:",
+        "saved": "Data saved in file"
     },
     "pl": {
         "name": "Polski",
@@ -37,6 +39,8 @@
         "edit_param": "Wybierz które wartości edytować. Dostępne polecenia:",
         "new_value": "Podaj nową wartość",
         "graph_name": "Podaj nazwę pliku",
-        "close_graph": "Zamknij okno z wykresem aby kontynuuować"
+        "close_graph": "Zamknij okno z wykresem aby kontynuuować",
+        "save": "Zapisać dane? 'yes' jeśli tak, 'no' jeśli nie. Opcje:",
+        "saved": "Zapisano dane w pliku"
     }
 }

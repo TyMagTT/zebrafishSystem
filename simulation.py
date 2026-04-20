@@ -1,7 +1,7 @@
 # LIBRARIES
 
 from components import Controller
-from settings_reader import open_file, create_components
+from settings_reader import open_file, save_file, create_components
 from time import sleep
 from math import floor
 from matplotlib import pyplot as plt
@@ -159,6 +159,8 @@ def next_state(state, command):
                 return 61
             if command == 'conduct':
                 return 62
+            if command == 'save':
+                return 69
             if command == 'back':
                 return 5
         case 7:
@@ -168,6 +170,8 @@ def next_state(state, command):
                 return 71
             if command == 'conduct':
                 return 72
+            if command == 'save':
+                return 79
             if command == 'back':
                 return 5
         case 8:
@@ -177,6 +181,8 @@ def next_state(state, command):
                 return 81
             if command == 'conduct':
                 return 82
+            if command == 'save':
+                return 89
             if command == 'back':
                 return 5
         case 40:
@@ -216,6 +222,8 @@ def next_state(state, command):
                 return 623
             if command == 'back':
                 return 6
+        case 69:
+            return 6
         case 70:
             if command == 'speed':
                 return 700
@@ -237,6 +245,8 @@ def next_state(state, command):
                 return 721
             if command == 'back':
                 return 7
+        case 79:
+            return 7
         case 80:
             if command == 'min':
                 return 800
@@ -270,6 +280,8 @@ def next_state(state, command):
                 return 823
             if command == 'back':
                 return 8
+        case 89:
+            return 8
     if state >= 500 and state < 600:
         if command == 'simulation':
             return 6
@@ -343,7 +355,7 @@ def execute_state(state, last_tank):
                 print(f'change: {change}')
                 print(f'max: {maximum}')
                 print(f'min: {minimum}')
-            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
             data = None
             return command, data
         case 7:
@@ -354,7 +366,7 @@ def execute_state(state, last_tank):
                 print(f'\n{id}:')
                 print(f'speed: {speed}')
                 print(f'unit: {unit}')
-            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
             data = None
             return command, data
         case 8:
@@ -369,7 +381,7 @@ def execute_state(state, last_tank):
                 print(f'low: {low_value}')
                 print(f'high: {high_value}')
                 print(f'max: {alarm_high}')
-            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
             data = None
             return command, data
         case 40:
@@ -397,6 +409,13 @@ def execute_state(state, last_tank):
         case 62:
             command = select_option(msg['edit_param'], msg['again'], ['value', 'change', 'max', 'min', 'back'])
             data = None
+            return command, data
+        case 69:
+            command = select_option(msg['save'], msg['again'], ['yes', 'no'])
+            data = None
+            if command == 'yes':
+                save_file(my_parameters, 'starting_parameters.json')
+                print(msg['saved'])
             return command, data
         case 70:
             command = select_option(msg['edit_param'], msg['again'], ['speed', 'unit', 'back'])

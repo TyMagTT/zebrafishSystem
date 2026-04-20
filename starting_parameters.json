@@ -10,7 +10,7 @@
     },
     {
         "id": "temperature",
-        "value": 27,
+        "value": 30.0,
         "simulation": {
             "average_change": 0.1,
             "max_value": 100,
