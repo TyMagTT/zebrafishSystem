@@ -375,6 +375,7 @@ def execute_state(state, last_tank):
         case 40:
             command = None
             data = None
+            print(msg['close_graph'])
             plt.show()
             return command, data
         case 41:
@@ -382,6 +383,7 @@ def execute_state(state, last_tank):
             name = input(f'{msg['graph_name']}\n')
             plt.savefig(f'{name}.png')
             data = None
+            print(msg['close_graph'])
             plt.show()
             return command, data
         case 60:
