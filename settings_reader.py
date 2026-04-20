@@ -15,7 +15,7 @@ def open_file(path):
 
 def save_file(values, path):
     with open(path, 'w') as file_handle:
-        json.dump(values, file_handle, indent=4)
+        json.dump(values, file_handle, indent=4, ensure_ascii=False)
 
 
 def create_components(component_list, tank_settings):
