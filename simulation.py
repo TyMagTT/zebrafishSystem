@@ -216,11 +216,26 @@ def next_state(state, command):
             if command == 'back':
                 return 6
         case 70:
-            return 7
+            if command == 'speed':
+                return 700
+            if command == 'unit':
+                return 701
+            if command == 'back':
+                return 7
         case 71:
-            return 7
+            if command == 'speed':
+                return 710
+            if command == 'unit':
+                return 711
+            if command == 'back':
+                return 7
         case 72:
-            return 7
+            if command == 'speed':
+                return 720
+            if command == 'unit':
+                return 721
+            if command == 'back':
+                return 7
         case 80:
             if command == 'min':
                 return 800
@@ -263,6 +278,8 @@ def next_state(state, command):
             return 5
     if state >= 600 and state < 700:
         return 6
+    if state >= 700 and state < 800:
+        return 7
     if state >= 800 and state < 900:
         return 8
     raise ValueError
