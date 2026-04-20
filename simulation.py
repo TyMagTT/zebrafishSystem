@@ -378,15 +378,15 @@ def execute_state(state):
             plt.show()
             return command, data
         case 60:
-            command = select_option(msg['edit_param'], ['again'], ['value', 'change', 'max', 'min', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['value', 'change', 'max', 'min', 'back'])
             data = None
             return command, data
         case 61:
-            command = select_option(msg['edit_param'], ['again'], ['value', 'change', 'max', 'min', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['value', 'change', 'max', 'min', 'back'])
             data = None
             return command, data
         case 62:
-            command = select_option(msg['edit_param'], ['again'], ['value', 'change', 'max', 'min', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['value', 'change', 'max', 'min', 'back'])
             data = None
             return command, data
         case 70:
@@ -402,15 +402,15 @@ def execute_state(state):
             data = None
             return command, data
         case 80:
-            command = select_option(msg['edit_param'], ['again'], ['min', 'low', 'high', 'max', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['min', 'low', 'high', 'max', 'back'])
             data = None
             return command, data
         case 81:
-            command = select_option(msg['edit_param'], ['again'], ['min', 'low', 'high', 'max', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['min', 'low', 'high', 'max', 'back'])
             data = None
             return command, data
         case 82:
-            command = select_option(msg['edit_param'], ['again'], ['min', 'low', 'high', 'max', 'back'])
+            command = select_option(msg['edit_param'], msg['again'], ['min', 'low', 'high', 'max', 'back'])
             data = None
             return command, data
         case 700:
@@ -438,7 +438,7 @@ def execute_state(state):
             data = None
             return command, data
     if state >= 500 and state < 600:
-        command = select_option(msg['edit_param'], ['again'], ['simulation', 'components', 'back'])
+        command = select_option(msg['edit_param'], msg['again'], ['simulation', 'components', 'back'])
         data = None
         return command, data
     if state >= 600 and state < 700:
