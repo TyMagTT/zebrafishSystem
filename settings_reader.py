@@ -13,8 +13,7 @@ def open_file(path):
     return setting_list
 
 
-def create_components(path, tank_settings):
-    component_list = open_file(path)
+def create_components(component_list, tank_settings):
     tank_list = []
     meter_list = []
     regulator_list = []
