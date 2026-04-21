@@ -15,3 +15,22 @@ This project simulates a management system controlling water parameters in a zeb
 ## How does the simulation work?
 
 Every step the controller checks readouts of each meter and compares them to a dict of parameters it was given at the start. If the parameter in the tank read by the meter is lower than the minimum safe value or higher than the maximum safe value, it sounds and alarm. If the value is between the low and high values, nothing happens, and it checks the next parameter. If the value is higher than the high value, it turns off the regulator responsible for raising this parameter, thus letting it fall down to the chosen range naturally. If the value is lower than the low value, the corresponding regulator is turned on, raising the parameter.
+
+## How to use the program?
+
+1. Make sure you have downloaded all required files:
+* simulation.py (runs the simulation)
+* components.py (defines object classes)
+* settings_reader.py (opens configuration files and creates objects)
+* starting_parameters.json (saves simulation settings)
+* component_settings.json (saves component settings)
+* parameter_settings.json (saves controller settings)
+
+2. Run simulation.py
+
+3. Select your language, and follow printed instructions (commands are case-sensitive!)
+
+Changes set in the edit mode are automatically applied for this instance of the program. To ensure value changes being remembered between sessions, use the save option for every group edited (simulation, components, controller). 
+
+All gui options, and their respective states in the code can be seen here:
+<img width="2000" height="1414" alt="ZebrafishGui" src="https://github.com/user-attachments/assets/b9b599e3-9aac-47b8-b641-56f804d993df" />
