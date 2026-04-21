@@ -1,3 +1,4 @@
+<img width="2000" height="1414" alt="ZebrafishGui (1)" src="https://github.com/user-attachments/assets/478ed86d-0495-44f5-bfaa-ca2731dadc13" />
 # Zebrafish Facility Management System
 
 ## A control system designed to monitor and regulate environmental conditions in a zebrafish facility
@@ -33,4 +34,4 @@ Every step the controller checks readouts of each meter and compares them to a d
 Changes set in the edit mode are automatically applied for this instance of the program. To ensure value changes being remembered between sessions, use the save option for every group edited (simulation, components, controller). 
 
 All gui options, and their respective states in the code can be seen here:
-<img width="2000" height="1414" alt="ZebrafishGui" src="https://github.com/user-attachments/assets/b9b599e3-9aac-47b8-b641-56f804d993df" />
+<img width="2000" height="1414" alt="ZebrafishGui (1)" src="https://github.com/user-attachments/assets/5fab87f5-f82d-4ee5-a8ff-95b47635cd1f" />
