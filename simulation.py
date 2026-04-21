@@ -355,7 +355,7 @@ def execute_state(state, last_tank):
                 print(f'change: {change}')
                 print(f'max: {maximum}')
                 print(f'min: {minimum}')
-            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
+            command = select_option(msg['edit_or_save'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
             data = None
             return command, data
         case 7:
@@ -366,7 +366,7 @@ def execute_state(state, last_tank):
                 print(f'\n{id}:')
                 print(f'speed: {speed}')
                 print(f'unit: {unit}')
-            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
+            command = select_option(msg['edit_or_save'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
             data = None
             return command, data
         case 8:
@@ -381,7 +381,7 @@ def execute_state(state, last_tank):
                 print(f'low: {low_value}')
                 print(f'high: {high_value}')
                 print(f'max: {alarm_high}')
-            command = select_option(msg['edit_param'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
+            command = select_option(msg['edit_or_save'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
             data = None
             return command, data
         case 40:

@@ -15,11 +15,13 @@
         "begin": "Begin simulation or go back to settings? Avaliable commands:",
         "save_graph": "Save the graph? Options:",
         "edit_param": "Choose which parameter to edit. Avaliable commands:",
+        "edit_or_save": "Choose which parameter to edit, or save values. Avaliable commands:",
         "new_value": "Input new value",
         "graph_name": "Input the name of the file",
         "close_graph": "Close graph window to continue",
         "save": "Save data? Options:",
-        "saved": "Data saved in file"
+        "saved": "Data saved in file",
+        "simulating": "Simulating frame"
     },
     "pl": {
         "name": "Polski",
@@ -30,17 +32,19 @@
         "conductivity": "Przewodność wody",
         "steps": "Kroki",
         "unit": "Jednostka",
-        "select_mode": "Podaj 'run' aby przejść do symulacji, 'edit', aby przejść do ustawień lub 'exit' aby zakończyć program. Dostępne polecenia:",
+        "select_mode": "Wpisz 'run' aby przejść do symulacji, 'edit', aby przejść do ustawień lub 'exit' aby zakończyć program. Dostępne polecenia:",
         "again": "Polecenie nie rozpoznane, spróbuj ponownie",
         "again_number": "Wartość musi być liczbą, spróbuj ponownie",
         "select_duration": "Podaj czas trwania symulacji w sekundach.",
         "begin": "Aby rozpocząć symulację podaj 'begin', lub 'back' aby wrócić do ustawień.  Dostępne polecenia:",
         "save_graph": "Zapisać wykres? 'yes' jeśli tak, 'no' jeśli nie. Dostępne polecenia:",
         "edit_param": "Wybierz które wartości edytować. Dostępne polecenia:",
+        "edit_or_save": "Wybierz które wartości edytować, lub zapisać dane wpisując 'save'. Dostępne polecenia:",
         "new_value": "Podaj nową wartość",
         "graph_name": "Podaj nazwę pliku",
         "close_graph": "Zamknij okno z wykresem aby kontynuuować",
         "save": "Zapisać dane? 'yes' jeśli tak, 'no' jeśli nie. Opcje:",
-        "saved": "Zapisano dane w pliku"
+        "saved": "Zapisano dane w pliku",
+        "simulating": "Symulowanie klatki"
     }
 }
