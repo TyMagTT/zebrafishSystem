@@ -19,9 +19,6 @@ controller = None
 
 # FUNCTIONS
 
-def format_tank_name(tank_object):
-    return f'Tank{str(id(tank_object))[-3:]}'
-
 
 def check_meters(meters):
     values = []
@@ -36,6 +33,10 @@ def check_meters(meters):
     return values
 
 
+def format_tank_name(tank_object):
+    return f'Tank{str(id(tank_object))[-3:]}'
+
+
 def print_current_values(meters):
     readings = check_meters(meters)
     for reading in readings:
@@ -45,6 +46,11 @@ def print_current_values(meters):
         tank_name = format_tank_name(tank)
         formatted = f'{type} of {tank_name} is {value} {unit} ({arrow})'
         print(formatted)
+
+
+def print_frame_progress(frame, frame_number, language):
+    message = f'{language['simulating']} {frame + 1}/{frame_number}'
+    print(message)
 
 
 def save_values(dictionary, meters):
@@ -70,11 +76,12 @@ def plot_values(sub_x, x, y, title, x_label, y_label):
 
 def simulate(tanks, meters, controller, frame_number, wait_time):
     saved_values = {}
-    for i in range(frame_number):
+    for frame in range(frame_number):
         for tank in tanks:
             tank.simulate()
         controller.step()
-        print_current_values(meters)
+        # print_current_values(meters)
+        print_frame_progress(frame, frame_number, msg)
         save_values(saved_values, meters)
         sleep(wait_time)
     return saved_values
