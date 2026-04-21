@@ -68,7 +68,6 @@ def save_values(dictionary, meters):
 
 def plot_values(sub_x, x, y, title, x_label, y_label):
     ax[sub_x].plot(x, y)
-    # ax[sub_x].set_ylim(bottom=0)
     ax[sub_x].set_title(title)
     ax[sub_x].set_xlabel(x_label)
     ax[sub_x].set_ylabel(y_label)
@@ -89,13 +88,14 @@ def simulate(tanks, meters, controller, frame_number, wait_time):
 
 def create_graph(frame_number, saved_values, msg):
     plot_seconds = list(range(0, frame_number))
+    meters = my_components[0]['meters']
     for meter in saved_values:
         if meter[-2:] == 'ph':
-            plot_values(0, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
+            plot_values(0, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], meters['ph'])
         elif meter[-2:] == 're':
-            plot_values(1, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
+            plot_values(1, plot_seconds, saved_values[meter], msg['temperature'], msg['steps'], meters['temperature'])
         elif meter[-2:] == 'ty':
-            plot_values(2, plot_seconds, saved_values[meter], msg['ph'], msg['steps'], msg['unit'])
+            plot_values(2, plot_seconds, saved_values[meter], msg['conductivity'], msg['steps'], meters['conductivity'])
 
 
 def select_language(languages):
@@ -561,11 +561,19 @@ while on:
         else:
             raise ValueError
         for parameter in my_parameters:
+            simulation = parameter['simulation']
             if parameter['id'] == param:
                 if value == 'value':
-                    parameter['value'] = data
+                    if data > simulation['max_value']:
+                        print(f'\n[!!!] ERROR: {msg['value_too_high']} [!!!]')
+                        sleep(3)
+                    elif data < simulation['min_value']:
+                        print(f'\n[!!!] ERROR: {msg['value_too_low']} [!!!]')
+                        sleep(3)
+                    else:
+                        parameter[value] = data
                 else:
-                    parameter['simulation'][value] = data
+                    simulation[value] = data
     elif state >= 700 and state < 800:
         state_string = str(state)
         state_numbers = list(state_string)

@@ -21,7 +21,9 @@
         "close_graph": "Close graph window to continue",
         "save": "Save data? Options:",
         "saved": "Data saved in file",
-        "simulating": "Simulating frame"
+        "simulating": "Simulating frame",
+        "value_too_high": "Starting value cannot be higher than max value",
+        "value_too_low": "Starting value cannot be lower than min value"
     },
     "pl": {
         "name": "Polski",
@@ -45,6 +47,8 @@
         "close_graph": "Zamknij okno z wykresem aby kontynuuować",
         "save": "Zapisać dane? 'yes' jeśli tak, 'no' jeśli nie. Opcje:",
         "saved": "Zapisano dane w pliku",
-        "simulating": "Symulowanie klatki"
+        "simulating": "Symulowanie klatki",
+        "value_too_high": "Wartość początkowa nie może być wyższa niż wartość maksymalna",
+        "value_too_low": "Wartośc początkowa nie może być niższa niż wartość minimalna"
     }
 }
