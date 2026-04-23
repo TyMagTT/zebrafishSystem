@@ -138,14 +138,16 @@ def next_state(state, command):
             if command == 'exit':
                 return -1
         case 1:
-            return 2
-        case 2:
             if command == 'begin':
                 return 3
+            if command == 'time':
+                return 2
             if command == 'framerate':
                 return 20
             if command == 'back':
                 return 0
+        case 2:
+            return 1
         case 3:
             return 4
         case 4:
@@ -195,7 +197,7 @@ def next_state(state, command):
             if command == 'back':
                 return 5
         case 20:
-            return 2
+            return 1
         case 40:
             return 0
         case 41:
@@ -309,7 +311,7 @@ def next_state(state, command):
     raise ValueError
 
 
-def execute_state(state, last_tank):
+def execute_state(state, last_tank, time, frames):
     match state:
         case -1:
             message = f'\n{msg['exit']}'
@@ -319,6 +321,11 @@ def execute_state(state, last_tank):
             data = None
             return command, data
         case 1:
+            message = f'{msg['begin1']} {time} {msg['begin2']} {frames} {msg['begin3']}'
+            command = select_option(message, msg['again'], ['begin', 'time', 'framerate', 'back'])
+            data = None
+            return command, data
+        case 2:
             command = None
             number = False
             while not number:
@@ -329,10 +336,6 @@ def execute_state(state, last_tank):
                     number = True
                 except ValueError:
                     print(msg['again'])
-            return command, data
-        case 2:
-            command = select_option(msg['begin'], msg['again'], ['begin', 'back'])
-            data = None
             return command, data
         case 3:
             command = None
@@ -394,6 +397,18 @@ def execute_state(state, last_tank):
                 print(f'max: {alarm_high}')
             command = select_option(msg['edit_or_save'], msg['again'], ['ph', 'temp', 'conduct', 'save', 'back'])
             data = None
+            return command, data
+        case 20:
+            command = None
+            number = False
+            while not number:
+                message = f'{msg['select_framerate']}\n'
+                data = input(message)
+                try:
+                    data = int(data)
+                    number = True
+                except ValueError:
+                    print(msg['again'])
             return command, data
         case 40:
             command = None
@@ -529,20 +544,27 @@ def execute_state(state, last_tank):
 
 msg = select_language(language_file)
 state = 0
-frame_number = 0
+frame_number = 1000
+framerate = 1000
 wait_time = 0.001
+second_duration = 1
 saved_values = {}
 on = True
 last_tank_number = 0
 
 while on:
-    command, data = execute_state(state, last_tank_number)
-    if state == 1:
+    command, data = execute_state(state, last_tank_number, second_duration, framerate)
+    if state == 2:
         second_duration = data
-        frame_number = floor(second_duration / wait_time)
+        wait_time = second_duration/frame_number
+        frame_number = second_duration * framerate
     elif state == 3:
         saved_values = data
         fig, ax = plt.subplots(3, 1)
+    elif state == 20:
+        framerate = data
+        wait_time = second_duration/framerate
+        frame_number = second_duration * framerate
     elif state >= 500 and state < 600:
         last_tank_number = state - 500
     elif state >= 600 and state < 700:
