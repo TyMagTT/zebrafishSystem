@@ -32,7 +32,7 @@ Every step the controller checks readouts of each meter and compares them to a d
 
 Changes set in the edit mode are automatically applied for this instance of the program. To ensure value changes being remembered between sessions, use the save option for every group edited (simulation, components, controller). 
 
-# Gui
+## Gui
 
 The user interface of this program is text-based and handled mostly by set_state() and execute_state() functions in simulation.py. The program knows what to do based on the state it's in. Each frame the execute_state() function is called first, and it handles user input, ensures its validity, and returns data if needed. If it's required the returned data is used based on the state in the main program loop, and the next state is set based on the last state and given command (if any) by the next_state() function. To add a new state make sure that the used code is unique, and properly handled in set_state() and execute_state() functions. Every state except state -1 reserved for exiting the program requires a next state specified in the next_state() function, and to return a command and data in a tuple in the execute_state() function.
  
