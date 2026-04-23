@@ -1,29 +1,60 @@
 [
-    {
-        "id": "ph",
-        "value": 7.5,
-        "simulation": {
-            "average_change": 0.05,
-            "max_value": 14,
-            "min_value": 0
+    [
+        {
+            "id": "ph",
+            "value": 7.5,
+            "simulation": {
+                "average_change": 0.05,
+                "max_value": 14,
+                "min_value": 0
+            }
+        },
+        {
+            "id": "temperature",
+            "value": 30.0,
+            "simulation": {
+                "average_change": 0.05,
+                "max_value": 100,
+                "min_value": 20
+            }
+        },
+        {
+            "id": "conductivity",
+            "value": 700,
+            "simulation": {
+                "average_change": 5,
+                "max_value": 10000,
+                "min_value": 100
+            }
         }
-    },
-    {
-        "id": "temperature",
-        "value": 27.0,
-        "simulation": {
-            "average_change": 0.1,
-            "max_value": 100,
-            "min_value": 20
+    ],
+    [
+        {
+            "id": "ph",
+            "value": 7.0,
+            "simulation": {
+                "average_change": 0.05,
+                "max_value": 14,
+                "min_value": 0
+            }
+        },
+        {
+            "id": "temperature",
+            "value": 23.0,
+            "simulation": {
+                "average_change": 0.1,
+                "max_value": 100,
+                "min_value": 20
+            }
+        },
+        {
+            "id": "conductivity",
+            "value": 700,
+            "simulation": {
+                "average_change": 5,
+                "max_value": 10000,
+                "min_value": 100
+            }
         }
-    },
-    {
-        "id": "conductivity",
-        "value": 700,
-        "simulation": {
-            "average_change": 5,
-            "max_value": 10000,
-            "min_value": 100
-        }
-    }
+    ]
 ]

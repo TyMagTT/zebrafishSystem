@@ -24,7 +24,8 @@ def create_components(component_list, tank_settings):
     regulator_list = []
     other_list = []
     for tank in component_list:
-        tank_object = Tank(deepcopy(tank_settings))
+        index = component_list.index(tank)
+        tank_object = Tank(deepcopy(tank_settings[index]))
         for id in tank['meters']:
             unit = tank['meters'][id]
             new_meter = Meter(tank_object, id, 0, unit)

@@ -69,7 +69,7 @@ def save_values(dictionary, meters):
 def plot_values(sub_x, x, y, title, x_label, y_label):
     ax[sub_x].plot(x, y)
     ax[sub_x].set_title(title)
-    ax[sub_x].set_xlabel(x_label)
+    # ax[sub_x].set_xlabel(x_label)
     ax[sub_x].set_ylabel(y_label)
 
 
@@ -142,6 +142,8 @@ def next_state(state, command):
         case 2:
             if command == 'begin':
                 return 3
+            if command == 'framerate':
+                return 20
             if command == 'back':
                 return 0
         case 3:
@@ -192,6 +194,8 @@ def next_state(state, command):
                 return 89
             if command == 'back':
                 return 5
+        case 20:
+            return 2
         case 40:
             return 0
         case 41:
@@ -351,7 +355,7 @@ def execute_state(state, last_tank):
             data = None
             return command, data
         case 6:
-            for type in my_parameters:
+            for type in my_parameters[last_tank]:
                 id = type['id']
                 value = type['value']
                 change = type['simulation']['average_change']
@@ -560,7 +564,7 @@ while on:
             value = 'min_value'
         else:
             raise ValueError
-        for parameter in my_parameters:
+        for parameter in my_parameters[last_tank_number]:
             simulation = parameter['simulation']
             if parameter['id'] == param:
                 if value == 'value':
