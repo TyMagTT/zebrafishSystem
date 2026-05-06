@@ -2,7 +2,7 @@ from random import uniform
 
 
 class Meter:
-    def __init__(self, current_object, meter_type, current_value, unit):
+    def __init__(self, current_object, meter_type, current_value, unit, error = None):
         if not isinstance(unit, str):
             raise ValueError
         self._object = current_object
@@ -10,9 +10,13 @@ class Meter:
         self._current_value = current_value
         self._unit = unit
         self.is_raising = False
+        self._error = error
 
     def update_value(self):
-        new_value = self._object.check(self._type)
+        if self._error == 'meter_broken':
+            new_value = None
+        else:
+            new_value = self._object.check(self._type)
         self._current_value = new_value
 
     def value(self):
