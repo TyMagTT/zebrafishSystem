@@ -1,4 +1,4 @@
-from random import uniform
+from random import uniform, randrange, choice
 
 
 class Meter:
@@ -13,7 +13,7 @@ class Meter:
         self._error = error
 
     def update_value(self):
-        if self._error == 'meter_broken':
+        if self.error() == 'meter_broken':
             new_value = None
         else:
             new_value = self._object.check(self._type)
@@ -31,15 +31,22 @@ class Meter:
     def current_object(self):
         return self._object
 
+    def error(self):
+        return self._error
+
 
 class Regulator:
-    def __init__(self, current_object, regulator_type, speed):
+    def __init__(self, current_object, regulator_type, speed, error = None):
         self._object = current_object
         self._type = regulator_type
         self._speed = speed
+        self._error = error
 
     def work(self):
-        speed = float(self._speed)
+        if self.error() == 'regulator_off' or self.error() == 'container_empty':
+           speed = 0
+        else:
+            speed = float(self._speed)
         self._object.change_by(self._type, speed)
 
     def speed(self):
@@ -50,6 +57,9 @@ class Regulator:
 
     def current_object(self):
         return self._object
+
+    def error(self):
+        return self._error
 
 
 class Tank:
@@ -151,6 +161,18 @@ class Controller:
     def send_alarm(self, parameter, code, message, value):
         msg = f'{message} Current {parameter} is {value}! (Code: {code})'
         print(msg)
+
+    def choose_failure(self, fail_chance):
+        failures = [
+            'regulator_on',
+            'regulator_off',
+            'container_empty',
+            'meter_broken'
+        ]
+        if randrange(fail_chance) > 0:
+            return None
+        failure = choice(failures)
+        return failure
 
     def step(self):
         msg = {

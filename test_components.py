@@ -146,3 +146,10 @@ def test_controller_raise_parameter():
     assert around(my_tank.check("ph"), 7.5)
     my_controller.raise_parameter("ph", my_tank)
     assert around(my_tank.check("ph"), 8.0)
+
+my_tank = Tank(deepcopy(my_parameters))
+my_meter = Meter(my_tank, "ph", 0, "pH")
+my_pump = Regulator(my_tank, "ph", 0.5)
+my_controller = Controller([my_tank], [my_meter], [my_pump], [], my_settings)
+result = my_controller.choose_failure(10)
+print(result)
