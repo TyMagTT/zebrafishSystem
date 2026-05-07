@@ -58,7 +58,8 @@ def save_values(dictionary, meters):
     for reading in readings:
         tank, type, value, unit, working = reading
         tank_name = format_tank_name(tank)
-        value = round(value, 2)
+        if value != None:
+            value = round(value, 2)
         meter_name = f'{tank_name}_{type}'
         if meter_name in dictionary.keys():
             dictionary[meter_name].append(value)

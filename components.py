@@ -44,7 +44,7 @@ class Regulator:
 
     def work(self):
         if self.error() == 'regulator_off' or self.error() == 'container_empty':
-           speed = 0
+           speed = 0.0
         else:
             speed = float(self._speed)
         self._object.change_by(self._type, speed)
@@ -135,6 +135,8 @@ class Controller:
             if correct_type and correct_object:
                 meter.update_value()
                 reading = meter.value()
+                if reading == None:
+                    reading = 0
         for setting in self._settings:
             if setting['id'] == parameter_id:
                 if reading < setting['alarm_low']:
@@ -218,4 +220,4 @@ class Controller:
                 elif result == "alarm_low":
                     self.send_alarm(id, result, msg[result], meter.value())
                     meter.is_raising = True
-            self.set_failure(100)
+            self.set_failure(1000)
