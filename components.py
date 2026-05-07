@@ -174,26 +174,30 @@ class Controller:
         failure = choice(failures)
         return failure
 
-    def set_failure(self):
-        failure = self.choose_failure(self, 10):
+    def set_failure(self, chance):
+        failure = self.choose_failure(chance)
         if failure == None:
             return
         if failure == 'regulator_on' or failure == 'regulator_off' or failure == 'container_empty':
-            objects = self._regulators()
+            objects = self._regulators
         elif failure == 'meter_broken':
-            objects = self._meters()
+            objects = self._meters
         fail_object = choice(objects)
         fail_object._error = failure
 
     def step(self):
         msg = {
-            "alarm_low": "Parameter too low!",
-            "alarm_high": "Parameter too high!"
+            'alarm_low': 'Parameter too low!',
+            'alarm_high': 'Parameter too high!',
+            'failure': 'Component failed!'
         }
 
         for meter in self._meters:
             id = meter.type()
             tank = meter.current_object()
+            error = meter.error()
+            if error != None:
+                self.send_alarm('meter', error, msg['failure'], 'broken')
             result = self.check_parameter(id, tank)
             if meter.is_raising:
                 if result == "alarm_high":
@@ -214,3 +218,4 @@ class Controller:
                 elif result == "alarm_low":
                     self.send_alarm(id, result, msg[result], meter.value())
                     meter.is_raising = True
+            self.set_failure(100)
