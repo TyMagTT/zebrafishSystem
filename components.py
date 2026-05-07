@@ -187,6 +187,20 @@ class Controller:
         fail_object = choice(objects)
         fail_object._error = failure
 
+    def diagnose(self):
+        failures = {}
+        for meter in self._meters:
+            error = meter.error()
+            if error != None:
+                key = f'meter_{str(id(meter))[-3:]}'
+                failures[key] = error
+        for regulator in self._regulators:
+            error = regulator.error()
+            if error != None:
+                key = f'regulator_{str(id(regulator))[-3:]}'
+                failures[key] = error
+        return failures
+
     def step(self):
         msg = {
             'alarm_low': 'Parameter too low!',
@@ -197,10 +211,10 @@ class Controller:
         for meter in self._meters:
             id = meter.type()
             tank = meter.current_object()
-            error = meter.error()
-            if error != None:
-                self.send_alarm('meter', error, msg['failure'], 'broken')
             result = self.check_parameter(id, tank)
+            failures = self.diagnose()
+            for failure in failures:
+                self.send_alarm(failure, failures[failure], msg['failure'], 'broken')
             if meter.is_raising:
                 if result == "alarm_high":
                     self.send_alarm(id, result, msg[result], meter.value())
