@@ -208,13 +208,14 @@ class Controller:
             'failure': 'Component failed!'
         }
 
+        failures = self.diagnose()
+        for failure in failures:
+            self.send_alarm(failure, failures[failure], msg['failure'], 'broken')
+
         for meter in self._meters:
             id = meter.type()
             tank = meter.current_object()
             result = self.check_parameter(id, tank)
-            failures = self.diagnose()
-            for failure in failures:
-                self.send_alarm(failure, failures[failure], msg['failure'], 'broken')
             if meter.is_raising:
                 if result == "alarm_high":
                     self.send_alarm(id, result, msg[result], meter.value())

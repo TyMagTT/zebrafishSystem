@@ -6,7 +6,7 @@
             "simulation": {
                 "average_change": 0.05,
                 "max_value": 14,
-                "min_value": 0
+                "min_value": 6.0
             }
         },
         {
@@ -35,7 +35,7 @@
             "simulation": {
                 "average_change": 0.05,
                 "max_value": 14,
-                "min_value": 0
+                "min_value": 6.0
             }
         },
         {
