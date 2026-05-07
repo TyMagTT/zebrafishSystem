@@ -235,4 +235,4 @@ class Controller:
                 elif result == "alarm_low":
                     self.send_alarm(id, result, msg[result], meter.value())
                     meter.is_raising = True
-            self.set_failure(1000)
+        self.set_failure(1000)
