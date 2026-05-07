@@ -174,6 +174,17 @@ class Controller:
         failure = choice(failures)
         return failure
 
+    def set_failure(self):
+        failure = self.choose_failure(self, 10):
+        if failure == None:
+            return
+        if failure == 'regulator_on' or failure == 'regulator_off' or failure == 'container_empty':
+            objects = self._regulators()
+        elif failure == 'meter_broken':
+            objects = self._meters()
+        fail_object = choice(objects)
+        fail_object._error = failure
+
     def step(self):
         msg = {
             "alarm_low": "Parameter too low!",
