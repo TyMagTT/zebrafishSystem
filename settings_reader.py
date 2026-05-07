@@ -8,13 +8,13 @@ def open_file(path):
     extension = splitext(path)[1]
     if extension != '.json':
         raise ValueError
-    with open(path) as file_handle:
+    with open(path, encoding='utf-8') as file_handle:
         setting_list = json.load(file_handle)
     return setting_list
 
 
 def save_file(values, path):
-    with open(path, 'w') as file_handle:
+    with open(path, 'w', encoding='utf-8') as file_handle:
         json.dump(values, file_handle, indent=4, ensure_ascii=False)
 
 
