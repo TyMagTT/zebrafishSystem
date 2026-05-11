@@ -34,7 +34,30 @@ Changes set in the edit mode are automatically applied for this instance of the 
 
 ## User interface
 
-The user interface of this program is text-based and handled mostly by set_state() and execute_state() functions in simulation.py. The program knows what to do based on the state it's in. Each frame the execute_state() function is called first, and it handles user input, ensures its validity, and returns data if needed. If it's required the returned data is used based on the state in the main program loop, and the next state is set based on the last state and given command (if any) by the next_state() function. To add a new state make sure that the used code is unique, and properly handled in set_state() and execute_state() functions. Every state except state -1 reserved for exiting the program requires a next state specified in the next_state() function, and to return a command and data in a tuple in the execute_state() function.
+The user interface of this program is text-based and handled mostly by set_state() and execute_state() functions in simulation.py. The program knows what to do based on the state it's in. Each frame the execute_state() function is called first, and it handles user input, ensures its validity, and returns data if needed. If it's required the returned data is used based on the state in the main program loop, and the next state is set based on the last state and given command (if any) by the next_state() function. To add a new state make sure that the used code is unique, and properly handled in set_state() and execute_state() functions. Every state, except state -1 reserved for exiting the program, requires a next state specified in the next_state() function, and to return a command and data in a tuple in the execute_state() function.
  
 All gui options, and their respective states in the code can be seen here:
 <img width="2000" height="1414" alt="ZebrafishGui (2)" src="https://github.com/user-attachments/assets/6deb30b2-ef56-444e-999d-d708f3eec4dc" />
+
+## Random breakdowns
+
+There is a 1 in n chance (n being the "chance" parameter in Controller class set_failure method) that a component breaks down each step. When a failure is selected to happen, the type of failure is selected first from a list containing all breakdowns then a random component of the correct class for the type of failure is chosen. During the simulation all ongoing breakdowns are diagnosed and printed in the command line.
+
+Possible failure types:
+
+regulator_on
+*  Class: Regulator
+*  Description: Regulator gets stuck in the on position, raises parameter despite being ordered to shut off
+
+regulator_off
+*  Class: Regulator
+*  Description: Regulator gets stuck in the off position, not being able to raise its parameter
+  
+container_empty
+*  Class: Regulator
+*  Description: Pump has nothing left to pump, not being able to raise its parameter (only for pH and conductivity regulators)
+  
+meter_broken
+*  Class: Meter
+*  Description: Meter breaks, unable to return a reading
+
